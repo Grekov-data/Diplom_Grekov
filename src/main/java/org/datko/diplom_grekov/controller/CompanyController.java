@@ -5,9 +5,10 @@ import org.datko.diplom_grekov.entity.Company;
 import org.datko.diplom_grekov.service.CompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -35,8 +36,28 @@ public class CompanyController {
     }
 
     @PostMapping("new")
-    public String addNew() {
-        return "";
+    public String addNew(Company company, RedirectAttributes ra) {
+        Optional<Company> newCompany = companyService.add(company);
+        if(newCompany.isPresent()) {
+            ra.addFlashAttribute("successMessage",
+                    "Компания " + company.getName() + " успешно добавлена!");
+        } else {
+            ra.addFlashAttribute("errorMessage",
+                    "Компания " + company.getName() + " уже зарегистрирована!");
+        }
+        return "redirect:/company";
     }
 
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes ra) {
+        Optional<Company> removed = companyService.deleteById(id);
+        if(removed.isPresent()) {
+            ra.addFlashAttribute("successMessage",
+                    "Компания " + removed.get().getName() + " успешно удалена!");
+        } else {
+            ra.addFlashAttribute("errorMessage",
+                    "Некорректный id для удаления!");
+        }
+        return "redirect:/company";
+    }
 }

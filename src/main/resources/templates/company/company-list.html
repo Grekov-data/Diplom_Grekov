@@ -2,13 +2,19 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>company-list</title>
+  <title>Company-list</title>
   <link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <!-- список компаний V2 -->
 <div class="container-fluid text-center">
   <h1>Компании, зарегистрированные на сайте</h1>
+  <p th:if="${errorMessage != null}" class="alert alert-danger">
+    [[${errorMessage}]]
+  </p>
+  <p th:if="${successMessage != null}" class="alert alert-success">
+    [[${successMessage}]]
+  </p>
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
@@ -16,6 +22,7 @@
       <th>Сфера деятельности:</th>
       <th>Email:</th>
       <th>Сайт:</th>
+      <th>Действие:</th>
     </tr>
     </thead>
     <tbody>
@@ -24,12 +31,18 @@
       <td>[[${company.field}]]</td>
       <td>[[${company.email}]]</td>
       <td><a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a></td>
+      <td>
+        <a th:href="@{'/company/delete/' + ${company.id}}" class="btn btn-danger">Удалить</a>
+      </td>
     </tr>
     <tr th:if="${companies == null}">
       <td colspan="4">Нет записей</td>
     </tr>
     </tbody>
   </table>
+  <div>
+      <a th:href="@{/company/new}" class="btn btn-success form-control">Зарегистрировать компанию</a>
+  </div>
 </div>
 </body>
 </html>
