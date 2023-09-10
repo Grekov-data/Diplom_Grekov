@@ -2,13 +2,13 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Company-list</title>
+  <title>User-list</title>
   <link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
-<!-- список компаний V2 -->
+<!-- список пользователей -->
 <div class="container-fluid text-center">
-  <h1>Компании, зарегистрированные на сайте</h1>
+  <h1>Пользователи, зарегистрированные на сайте</h1>
   <h6><a th:href="@{/}">На главную</a></h6>
   <p th:if="${errorMessage != null}" class="alert alert-danger">
     [[${errorMessage}]]
@@ -19,30 +19,30 @@
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
-      <th>Название:</th>
-      <th>Сфера деятельности:</th>
+      <th>ФИО:</th>
+      <th>Пол:</th>
       <th>Email:</th>
-      <th>Сайт:</th>
+      <th>Возраст:</th>
       <th>Действие:</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="company: ${companies}">
-      <td>[[${company.name}]]</td>
-      <td>[[${company.field}]]</td>
-      <td>[[${company.email}]]</td>
-      <td><a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a></td>
+    <tr th:each="user: ${users}">
+      <td>[[${user.name}]]</td>
+      <td>[[${user.gender}]]</td>
+      <td>[[${user.email}]]</td>
+      <td>[[${user.age}]]</td>
       <td>
-        <a th:href="@{'/company/delete/' + ${company.id}}" class="btn btn-danger">Удалить</a>
+        <a th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger">Удалить</a>
       </td>
     </tr>
-    <tr th:if="${companies == null}">
+    <tr th:if="${users == null}">
       <td colspan="4">Нет записей</td>
     </tr>
     </tbody>
   </table>
   <div>
-      <a th:href="@{/company/new}" class="btn btn-success form-control">Зарегистрировать компанию</a>
+    <a th:href="@{/user/new}" class="btn btn-success form-control">Зарегистрироваться</a>
   </div>
 </div>
 </body>

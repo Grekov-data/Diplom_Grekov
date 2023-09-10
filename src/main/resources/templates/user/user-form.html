@@ -2,24 +2,31 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Company-form</title>
+  <title>User-form</title>
   <link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <div class="container-sm align-content-center text-center">
-  <h1>Укажите данные Вашей компании:</h1>
-  <form method="post" th:action="@{/company/new}" th:object="${company}">
+  <h1>Укажите Ваши данные:</h1>
+  <form method="post" th:action="@{/user/new}" th:object="${user}">
     <div class="mb-3 row">
-      <label class="col-sm-2 col-form-label" for="name">Название компании: </label>
+      <label class="col-sm-2 col-form-label" for="name">ФИО: </label>
       <div class="col-sm-10">
         <input class="form-control" type="text" id="name" th:field="*{name}" required minlength="1">
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-2 col-form-label" for="field">Сфера деятельности: </label>
+      <label class="col-sm-2 col-form-label" for="age">Возраст: </label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" id="field" th:field="*{field}" required minlength="1">
+        <input class="form-control" type="number" id="age" th:field="*{age}" required minlength="1">
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-2 col-form-label" for="gender">Пол: </label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" id="gender" th:field="*{gender}" required minlength="1">
       </div>
     </div>
 
@@ -31,9 +38,9 @@
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-2 col-form-label" for="website">Сайт компании (при наличии): </label>
+      <label class="col-sm-2 col-form-label" for="password">Пароль: </label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" id="website" th:field="*{website}">
+        <input class="form-control" type="text" id="password" th:field="*{password}" required minlength="1">
       </div>
     </div>
 
@@ -47,7 +54,7 @@
     <div class="mb-3 row">
       <div class="col-sm-2"></div>
       <div class="col-sm-5">
-        <a th:href="@{/company}" class="btn btn-success form-control">Отменить</a>
+        <a th:href="@{/user}" class="btn btn-success form-control">Отменить</a>
       </div>
     </div>
   </form>
