@@ -23,8 +23,9 @@ public class User {
     @Column(name = "email_f", nullable = false)
     private String email;                           //эл.почта
 
-    @Column(name = "password_f", nullable = false)
-    private String password;                        //пароль
+    //Добавить после Spring Security
+    /*@Column(name = "password_f", nullable = false)
+    private String password;                        //пароль*/
 
     ////изучить - не так написано
     /*@ManyToMany(mappedBy = "user")

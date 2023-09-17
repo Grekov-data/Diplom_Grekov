@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Company-form</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="card">
+  <div class="card-header bg-dark text-light">
+    Организация
+  </div>
+  <div th:if="${company != null}" class="card-body">
+    <h5 class="card-title">[[${company.id}]] - [[${company.name}]]</h5>
+    <p class="card-text">[[${company.email}]], веб-сайт: [[${company.website}]]</p>
+    <a th:href="@{/company}" class="btn btn-primary">Обратно к компаниям</a>
+  </div>
+
+  <div th:if="${company == null}" class="card-body">
+    <h5 class="card-title bg-danger text-light">Компания не найдена</h5>
+    <p class="card-text">Указан неверный id компании</p>
+    <a th:href="@{/company}" class="btn btn-primary">Обратно к компаниям</a>
+  </div>
+</div>
+</body>
+</html>

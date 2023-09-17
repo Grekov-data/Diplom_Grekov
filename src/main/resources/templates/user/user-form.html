@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>User-form</title>
-  <link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <div class="container-sm align-content-center text-center">
@@ -37,24 +37,20 @@
       </div>
     </div>
 
-    <div class="mb-3 row">
+    <!--<div class="mb-3 row">
       <label class="col-sm-2 col-form-label" for="password">Пароль: </label>
       <div class="col-sm-10">
         <input class="form-control" type="text" id="password" th:field="*{password}" required minlength="1">
       </div>
-    </div>
+    </div>-->
 
     <div class="mb-3 row">
       <div class="col-sm-2"></div>
       <div class="col-sm-5">
         <button class="btn btn-success form-control">Создать</button>
       </div>
-    </div>
-
-    <div class="mb-3 row">
-      <div class="col-sm-2"></div>
       <div class="col-sm-5">
-        <a th:href="@{/user}" class="btn btn-success form-control">Отменить</a>
+        <a th:href="@{/company}" class="btn btn-danger form-control">Отменить</a>
       </div>
     </div>
   </form>

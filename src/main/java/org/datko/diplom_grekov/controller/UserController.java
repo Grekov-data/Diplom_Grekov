@@ -1,7 +1,6 @@
 package org.datko.diplom_grekov.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.datko.diplom_grekov.entity.Company;
 import org.datko.diplom_grekov.entity.User;
 import org.datko.diplom_grekov.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -36,7 +35,7 @@ public class UserController {
     public String addNew(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "/user/user-form";
+        return "user/user-form";
     }
 
     @PostMapping("new")

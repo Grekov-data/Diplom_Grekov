@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Company-list</title>
-  <link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <!-- список компаний V2 -->
@@ -19,6 +19,7 @@
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
+      <th>ID</th>
       <th>Название:</th>
       <th>Сфера деятельности:</th>
       <th>Email:</th>
@@ -28,11 +29,15 @@
     </thead>
     <tbody>
     <tr th:each="company: ${companies}">
-      <td>[[${company.name}]]</td>
+      <td>[[${company.id}]]</td>
+      <td>
+        <a th:href="@{'/company/' + ${company.id}}">[[${company.name}]]</a>
+      </td>
       <td>[[${company.field}]]</td>
       <td>[[${company.email}]]</td>
       <td><a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a></td>
       <td>
+        <a th:href="@{'/company/update/' + ${company.id}}" class="btn btn-primary">Редактировать</a>
         <a th:href="@{'/company/delete/' + ${company.id}}" class="btn btn-danger">Удалить</a>
       </td>
     </tr>

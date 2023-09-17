@@ -6,11 +6,12 @@ import org.datko.diplom_grekov.rdb.repository.CompanyRepository;
 import org.datko.diplom_grekov.service.CompanyService;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class RdbCompanyRepository implements CompanyService {
+public class RdbCompanyService implements CompanyService {
 
     private final CompanyRepository companyRepository;
     @Override
@@ -57,20 +58,28 @@ public class RdbCompanyRepository implements CompanyService {
     @Override
     public Optional<Company> updateById(Integer id, Company company) {
         Optional<Company> updated = findById(id);
-        if (updated.isPresent()) {
+        Optional<Company> duplicatedByNameCompany = companyRepository.findByName(company.getName());
+        if (updated.isPresent() &&
+                (duplicatedByNameCompany.isEmpty() ||
+                        Objects.equals(duplicatedByNameCompany.get().getId(), id))) {
             company.setId(id);
             return Optional.of(companyRepository.save(company));
+        } else {
+            return Optional.empty();
         }
-        return updated;
     }
 
     @Override
     public Optional<Company> updateByName(String name, Company company) {
         Optional<Company> updated = findByName(name);
-        if (updated.isPresent()) {
+        Optional<Company> duplicatedByNameCompany = companyRepository.findByName(company.getName());
+        if (updated.isPresent() &&
+                (duplicatedByNameCompany.isEmpty() ||
+                        Objects.equals(duplicatedByNameCompany.get().getName(), name))) {
             company.setName(name);
-            return Optional.of(companyRepository.save(company));
+            return Optional.of(companyRepository.save(company)); // сохраняем новый данные
+        } else {
+            return Optional.empty();   // вернем удаленный (empty если не с таким id)
         }
-        return updated;
     }
 }

@@ -32,7 +32,7 @@ public class CompanyController {
     public String addNew(Model model) {
         Company company = new Company();
         model.addAttribute("company", company);
-        return "/company/company-form";
+        return "company/company-form";
     }
 
     @PostMapping("new")
@@ -57,6 +57,41 @@ public class CompanyController {
         } else {
             ra.addFlashAttribute("errorMessage",
                     "Некорректный id для удаления!");
+        }
+        return "redirect:/company";
+    }
+
+    @GetMapping("{id}")
+    public String details(@PathVariable Integer id, Model model) {
+        Optional<Company> company = companyService.findById(id);
+        if (company.isPresent()) {
+            model.addAttribute("company", company.get());
+        } else {
+            model.addAttribute("company", null);
+        }
+        return "company/company-details";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateExisting(@PathVariable Integer id, Model model) {
+        Optional<Company> company = companyService.findById(id);
+        if (company.isPresent()) {
+            model.addAttribute("company", company.get());
+        } else {
+            model.addAttribute("company", null);
+        }
+        return "company/company-form-update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateExisting(@PathVariable Integer id, Company company, RedirectAttributes ra) {
+        Optional<Company> updated = companyService.updateById(id, company);
+        if (updated.isPresent()) {
+            ra.addFlashAttribute("successMessage",
+                    "Компания успешно обновлена");
+        } else {
+            ra.addFlashAttribute("errorMessage",
+                    "Компания не была обновлена");
         }
         return "redirect:/company";
     }

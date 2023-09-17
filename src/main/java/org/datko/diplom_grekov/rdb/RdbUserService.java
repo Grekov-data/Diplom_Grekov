@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class RdbUserRepository implements UserService {
+public class RdbUserService implements UserService {
 
     private final UserRepository userRepository;
     @Override
