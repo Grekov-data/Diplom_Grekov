@@ -6,6 +6,7 @@ import org.datko.diplom_grekov.rdb.repository.UserRepository;
 import org.datko.diplom_grekov.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -40,13 +41,16 @@ public class RdbUserService implements UserService {
         return removable;
     }
 
-    @Override
     public Optional<User> updateById(Integer id, User user) {
         Optional<User> updated = findById(id);
-        if (updated.isPresent()) {
+        Optional<User> duplicatedByEmailUser = userRepository.findByEmail(user.getEmail());
+        if (updated.isPresent() &&
+                (duplicatedByEmailUser.isEmpty() ||
+                        Objects.equals(duplicatedByEmailUser.get().getId(), id))) {
             user.setId(id);
             return Optional.of(userRepository.save(user));
+        } else {
+            return Optional.empty();
         }
-        return updated;
     }
 }

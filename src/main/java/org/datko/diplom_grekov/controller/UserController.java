@@ -63,4 +63,39 @@ public class UserController {
         }
         return "redirect:/user";
     }
+
+    @GetMapping("{id}")
+    public String details(@PathVariable Integer id, Model model) {
+        Optional<User> user = userService.findById(id);
+        if (user.isPresent()) {
+            model.addAttribute("user", user.get());
+        } else {
+            model.addAttribute("user", null);
+        }
+        return "user/user-details";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateExisting(@PathVariable Integer id, Model model) {
+        Optional<User> user = userService.findById(id);
+        if (user.isPresent()) {
+            model.addAttribute("user", user.get());
+        } else {
+            model.addAttribute("user", null);
+        }
+        return "user/user-form-update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateExisting(@PathVariable Integer id, User user, RedirectAttributes ra) {
+        Optional<User> updated = userService.updateById(id, user);
+        if (updated.isPresent()) {
+            ra.addFlashAttribute("successMessage",
+                    "Данные пользователя успешно обновлены");
+        } else {
+            ra.addFlashAttribute("errorMessage",
+                    "Данные пользователя не были обновлены");
+        }
+        return "redirect:/user";
+    }
 }

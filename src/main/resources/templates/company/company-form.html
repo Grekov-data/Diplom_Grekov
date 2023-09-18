@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container-sm align-content-center text-center">
-  <h1>Укажите данные Вашей компании:</h1>
+  <h1>Укажите данные вашей компании:</h1>
   <form method="post" th:action="@{/company/new}" th:object="${company}">
     <div class="mb-3 row">
       <label class="col-sm-2 col-form-label" for="name">Название компании: </label>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-2 col-form-label" for="email">Эл. почта: </label>
+      <label class="col-sm-2 col-form-label" for="email">Эл.почта: </label>
       <div class="col-sm-10">
         <input class="form-control" type="email" id="email" th:field="*{email}" required>
       </div>

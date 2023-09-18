@@ -30,11 +30,14 @@
     <tbody>
     <tr th:each="user: ${users}">
       <td>[[${user.id}]]</td>
-      <td>[[${user.name}]]</td>
+      <td>
+        <a th:href="@{'/user/' + ${user.id}}">[[${user.name}]]</a>
+      </td>
       <td>[[${user.gender}]]</td>
       <td>[[${user.email}]]</td>
       <td>[[${user.age}]]</td>
       <td>
+        <a th:href="@{'/user/update/' + ${user.id}}" class="btn btn-primary">Редактировать</a>
         <a th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger">Удалить</a>
       </td>
     </tr>

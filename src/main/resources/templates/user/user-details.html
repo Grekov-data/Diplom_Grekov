@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User-details</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="card">
+  <div class="card-header bg-dark text-light">
+    Пользователь
+  </div>
+  <div th:if="${user != null}" class="card-body">
+    <h5 class="card-title">[[${user.name}]] (id [[${user.id}]])</h5>
+    <p class="card-text">Возраст - [[${user.age}]]
+      <br>
+      Эл.почта: [[${user.email}]]
+    </p>
+    <a th:href="@{/user}" class="btn btn-primary">Обратно к списку пользователей</a>
+  </div>
+
+  <div th:if="${user == null}" class="card-body">
+    <h5 class="card-title bg-danger text-light">Пользователь не найден</h5>
+    <p class="card-text">Указан неверный id компании</p>
+    <a th:href="@{/user}" class="btn btn-primary">Обратно к списку пользователей</a>
+  </div>
+</div>
+</body>
+</html>

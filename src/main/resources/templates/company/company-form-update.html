@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container-sm align-content-center text-center">
-  <h1>Редактирование компании:</h1>
+  <h1>Редактирование данных компании:</h1>
   <form method="post" th:action="@{'/company/update/' + ${company.id}}" th:object="${company}">
     <div class="mb-3 row">
       <label class="col-sm-2 col-form-label" for="name">Название компании: </label>

@@ -24,10 +24,6 @@ public class RdbCompanyService implements CompanyService {
         return companyRepository.findById(id);
     }
 
-    @Override
-    public Optional<Company> findByName(String name) {
-        return companyRepository.findByName(name);
-    }
 
     @Override
     public Optional<Company> add(Company company) {
@@ -47,15 +43,6 @@ public class RdbCompanyService implements CompanyService {
     }
 
     @Override
-    public Optional<Company> deleteByName(String name) {
-        Optional<Company> removable = findByName(name);
-        if (removable.isPresent()) {
-            companyRepository.deleteByName(name);
-        }
-        return removable;
-    }
-
-    @Override
     public Optional<Company> updateById(Integer id, Company company) {
         Optional<Company> updated = findById(id);
         Optional<Company> duplicatedByNameCompany = companyRepository.findByName(company.getName());
@@ -66,20 +53,6 @@ public class RdbCompanyService implements CompanyService {
             return Optional.of(companyRepository.save(company));
         } else {
             return Optional.empty();
-        }
-    }
-
-    @Override
-    public Optional<Company> updateByName(String name, Company company) {
-        Optional<Company> updated = findByName(name);
-        Optional<Company> duplicatedByNameCompany = companyRepository.findByName(company.getName());
-        if (updated.isPresent() &&
-                (duplicatedByNameCompany.isEmpty() ||
-                        Objects.equals(duplicatedByNameCompany.get().getName(), name))) {
-            company.setName(name);
-            return Optional.of(companyRepository.save(company)); // сохраняем новый данные
-        } else {
-            return Optional.empty();   // вернем удаленный (empty если не с таким id)
         }
     }
 }

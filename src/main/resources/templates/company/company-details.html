@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Company-form</title>
+  <title>Company-details</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
@@ -11,8 +11,12 @@
     Организация
   </div>
   <div th:if="${company != null}" class="card-body">
-    <h5 class="card-title">[[${company.id}]] - [[${company.name}]]</h5>
-    <p class="card-text">[[${company.email}]], веб-сайт: [[${company.website}]]</p>
+    <h5 class="card-title">[[${company.name}]] (id [[${company.id}]])</h5>
+    <p class="card-text">Сфера деятельности - [[${company.field}]]
+      <br><br>
+      Эл.почта: [[${company.email}]],
+      <br>
+      Сайт: <a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a></p>
     <a th:href="@{/company}" class="btn btn-primary">Обратно к компаниям</a>
   </div>
 
