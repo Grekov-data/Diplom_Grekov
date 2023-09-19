@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Fragments-for-page</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<header  th:fragment="page-header" class="p-3 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a th:href="@{/}" class="btn btn-warning">Главная</a></li>
+        <li><a th:href="@{/user}" class="nav-link px-2 text-white">Пользователи</a></li>
+        <li><a th:href="@{/survey}" class="nav-link px-2 text-white">Перечень опросов</a></li>
+        <li><a th:href="@{/company}" class="nav-link px-2 text-white">Компании</a></li>
+      </ul>
+
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Поиск..." aria-label="Поиск">
+      </form>
+
+      <div class="text-end">
+        <button type="button" class="btn btn-outline-light me-2">Войти</button>
+        <a th:href="@{/user/new}" type="button" class="btn btn-warning">Зарегистрироваться</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<footer th:fragment="page-footer" class="fixed-bottom bg-dark">
+  <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-white">О нас</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-white">FAQ</a></li>
+  </ul>
+  <p class="text-center text-white">© 2023 Опрос.ру</p>
+</footer>
+</body>
+</html>

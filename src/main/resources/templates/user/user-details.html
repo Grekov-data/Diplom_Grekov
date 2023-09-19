@@ -6,24 +6,28 @@
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
+<th:block th:replace="page/fragments.html :: page-header"/>
+
 <div class="card">
   <div class="card-header bg-dark text-light">
     Пользователь
   </div>
   <div th:if="${user != null}" class="card-body">
-    <h5 class="card-title">[[${user.name}]] (id [[${user.id}]])</h5>
+    <h5 class="card-title">[[${user.name}]] (id [[${user.id}]]) <a th:href="@{'/user/update/' + ${user.id}}" class="btn btn-primary">Редактировать профиль</a></h5>
     <p class="card-text">Возраст - [[${user.age}]]
       <br>
       Эл.почта: [[${user.email}]]
     </p>
-    <a th:href="@{/user}" class="btn btn-primary">Обратно к списку пользователей</a>
+    <a th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger">Удалить профиль</a>
   </div>
 
   <div th:if="${user == null}" class="card-body">
     <h5 class="card-title bg-danger text-light">Пользователь не найден</h5>
-    <p class="card-text">Указан неверный id компании</p>
-    <a th:href="@{/user}" class="btn btn-primary">Обратно к списку пользователей</a>
+    <p class="card-text">Указан неверный id пользователя</p>
+    <a th:href="@{/}" class="btn btn-primary">На главную</a>
   </div>
 </div>
+
+<th:block th:replace="page/fragments.html :: page-footer"/>
 </body>
 </html>

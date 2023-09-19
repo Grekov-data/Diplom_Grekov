@@ -6,6 +6,8 @@
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
+<th:block th:replace="page/fragments.html :: page-header"/>
+
 <div class="card">
   <div class="card-header bg-dark text-light">
     Организация
@@ -26,5 +28,7 @@
     <a th:href="@{/company}" class="btn btn-primary">Обратно к компаниям</a>
   </div>
 </div>
+
+<th:block th:replace="page/fragments.html :: page-footer"/>
 </body>
 </html>

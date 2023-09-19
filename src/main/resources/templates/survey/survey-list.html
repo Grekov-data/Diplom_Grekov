@@ -2,14 +2,14 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Company-list</title>
+  <title>Survey-list</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <th:block th:replace="page/fragments.html :: page-header"/>
 
 <div class="container-fluid text-center">
-  <h1>Компании, зарегистрированные на сайте</h1>
+  <h1>Список опросов для прохождения</h1>
   <p th:if="${errorMessage != null}" class="alert alert-danger">
     [[${errorMessage}]]
   </p>
@@ -21,33 +21,27 @@
     <tr>
       <th>ID</th>
       <th>Название:</th>
-      <th>Сфера деятельности:</th>
-      <th>Email:</th>
-      <th>Сайт:</th>
       <th>Действие:</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="company: ${companies}">
-      <td>[[${company.id}]]</td>
+    <tr th:each="survey: ${surveys}">
+      <td>[[${survey.id}]]</td>
       <td>
-        <a th:href="@{'/company/' + ${company.id}}">[[${company.name}]]</a>
+        <a th:href="@{'/survey/' + ${survey.id}}">[[${survey.name}]]</a>
       </td>
-      <td>[[${company.field}]]</td>
-      <td>[[${company.email}]]</td>
-      <td><a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a></td>
       <td>
-        <a th:href="@{'/company/update/' + ${company.id}}" class="btn btn-primary">Редактировать</a>
-        <a th:href="@{'/company/delete/' + ${company.id}}" class="btn btn-danger">Удалить</a>
+        <a th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-primary">Редактировать</a>
+        <a th:href="@{'/survey/delete/' + ${survey.id}}" class="btn btn-danger">Удалить</a>
       </td>
     </tr>
-    <tr th:if="${companies == null}">
+    <tr th:if="${surveys == null}">
       <td colspan="4">Нет записей</td>
     </tr>
     </tbody>
   </table>
   <div>
-      <a th:href="@{/company/new}" class="btn btn-success form-control">Зарегистрировать компанию</a>
+    <a th:href="@{/survey/new}" class="btn btn-success form-control">Создать опрос</a>
   </div>
 </div>
 

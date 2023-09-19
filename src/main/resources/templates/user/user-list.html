@@ -6,10 +6,10 @@
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
-<!-- список пользователей -->
+<th:block th:replace="page/fragments.html :: page-header"/>
+
 <div class="container-fluid text-center">
   <h1>Пользователи, зарегистрированные на сайте</h1>
-  <h6><a th:href="@{/}">На главную</a></h6>
   <p th:if="${errorMessage != null}" class="alert alert-danger">
     [[${errorMessage}]]
   </p>
@@ -50,5 +50,7 @@
     <a th:href="@{/user/new}" class="btn btn-success form-control">Зарегистрироваться</a>
   </div>
 </div>
+
+<th:block th:replace="page/fragments.html :: page-footer"/>
 </body>
 </html>

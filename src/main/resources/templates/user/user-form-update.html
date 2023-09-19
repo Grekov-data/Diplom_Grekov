@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User-form</title>
+    <title>User-form-update</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
@@ -50,10 +50,12 @@
                 <button class="btn btn-success form-control">Сохранить изменения</button>
             </div>
             <div class="col-sm-5">
-                <a th:href="@{/user}" class="btn btn-danger form-control">Отменить</a>
+                <a th:href="@{'/user/' + ${user.id}}" class="btn btn-danger form-control">Отменить</a>
             </div>
         </div>
     </form>
 </div>
+
+<th:block th:replace="page/fragments.html :: page-footer"/>
 </body>
 </html>

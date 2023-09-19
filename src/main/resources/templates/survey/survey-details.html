@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Survey-details</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<th:block th:replace="page/fragments.html :: page-header"/>
+
+<div class="card">
+  <div class="card-header bg-dark text-light">
+    Опрос
+  </div>
+  <div th:if="${survey != null}" class="card-body">
+    <h5 class="card-title">[[${survey.name}]] (id [[${survey.id}]])</h5>
+    <p>Здесь должно быть описание и прочее...</p>
+    <a th:href="@{/survey}" class="btn btn-primary">Обратно к опросам</a>
+  </div>
+
+  <div th:if="${survey == null}" class="card-body">
+    <h5 class="card-title bg-danger text-light">Опрос не найден</h5>
+    <p class="card-text">Указан неверный id опроса</p>
+    <a th:href="@{/survey}" class="btn btn-primary">Обратно к опросам</a>
+  </div>
+</div>
+
+<th:block th:replace="page/fragments.html :: page-footer"/>
+</body>
+</html>

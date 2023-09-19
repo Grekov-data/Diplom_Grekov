@@ -20,7 +20,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("")
+    @GetMapping("")                                              //вывод листа со списком пользователей
     public String findAll(Model model){
         Iterable<User> users = userService.findAll();
         if (users.iterator().hasNext()) {
@@ -31,14 +31,14 @@ public class UserController {
         return "user/user-list";
     }
 
-    @GetMapping("new")
+    @GetMapping("new")                                           //переход на лист для создания нового пользователя
     public String addNew(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "user/user-form";
     }
 
-    @PostMapping("new")
+    @PostMapping("new")                                          //создание учётной записи пользователя
     public String addNew(User user, RedirectAttributes ra) {
         Optional<User> newUser = userService.add(user);
         if(newUser.isPresent()) {
@@ -51,7 +51,7 @@ public class UserController {
         return "redirect:/user";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")                                  //удаление пользователя
     public String delete(@PathVariable Integer id, RedirectAttributes ra) {
         Optional<User> removed = userService.deleteById(id);
         if(removed.isPresent()) {
@@ -64,7 +64,7 @@ public class UserController {
         return "redirect:/user";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{id}")                                          //лист с детальной информацией о пользователе
     public String details(@PathVariable Integer id, Model model) {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
@@ -75,7 +75,7 @@ public class UserController {
         return "user/user-details";
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/update/{id}")                    //переход на лист для обновления данных существующего пользователя
     public String updateExisting(@PathVariable Integer id, Model model) {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
@@ -86,7 +86,7 @@ public class UserController {
         return "user/user-form-update";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update/{id}")                        //обновление данных уже существующей компании
     public String updateExisting(@PathVariable Integer id, User user, RedirectAttributes ra) {
         Optional<User> updated = userService.updateById(id, user);
         if (updated.isPresent()) {
@@ -96,6 +96,6 @@ public class UserController {
             ra.addFlashAttribute("errorMessage",
                     "Данные пользователя не были обновлены");
         }
-        return "redirect:/user";
+        return "redirect:/user/{id}";
     }
 }
