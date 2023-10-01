@@ -9,7 +9,8 @@ import java.util.Optional;
 public interface SurveyService {
     Iterable<Survey> findAll();                               //получить все опросники
     Optional<Survey> findById(Integer id);                    //получить по id
-    Optional<Survey> add(Survey survey);                      //добавить новый опросник
+    Optional<Survey> findByCompanyId(Integer companyId);      //получить список опросов определённой компании
+    Optional<Survey> add(Integer companyId, Survey survey);   //добавить новый опросник
     Optional<Survey> deleteById(Integer id);                  //удалить опросник по id
     Optional<Survey> updateById(Integer id, Survey survey);   //отредактировать опрос по id
 }

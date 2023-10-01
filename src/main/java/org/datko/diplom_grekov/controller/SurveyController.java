@@ -3,6 +3,8 @@ package org.datko.diplom_grekov.controller;
 import lombok.RequiredArgsConstructor;
 import org.datko.diplom_grekov.entity.Company;
 import org.datko.diplom_grekov.entity.Survey;
+import org.datko.diplom_grekov.service.CompanyService;
+import org.datko.diplom_grekov.service.ObjectSurvService;
 import org.datko.diplom_grekov.service.SurveyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,6 +24,8 @@ import java.util.Optional;
 public class SurveyController {
 
     private final SurveyService surveyService;
+    private final CompanyService companyService;
+    /*private final ObjectSurvService objectSurvService;*/
 
     @GetMapping("")                                                 //вывод листа со списком опросов
     public String findAll(Model model){
@@ -36,18 +42,34 @@ public class SurveyController {
     public String addNew(Model model) {
         Survey survey = new Survey();
         model.addAttribute("survey", survey);
+        Iterable<Company> companies = companyService.findAll();
+        model.addAttribute("companies", companies);
+        return "survey/survey-form";
+    }
+
+    @GetMapping("new/{companyId}")               //переход на лист для создания нового опроса для конкретной компании
+    public String addNew(@PathVariable Integer companyId, Model model, RedirectAttributes ra) {
+        Optional<Company> company = companyService.findById(companyId);
+        if (company.isEmpty()) {
+            ra.addFlashAttribute("errorMessage", "Компания не найдена");
+            return "redirect:/";
+        }
+        Survey survey = new Survey();
+        model.addAttribute("survey", survey);
+        Iterable<Company> companies = List.of(company.get());
+        model.addAttribute("companies", companies);
         return "survey/survey-form";
     }
 
     @PostMapping("new")                                             //создание нового опроса
     public String addNew(Survey survey, RedirectAttributes ra) {
-        Optional<Survey> newSurvey = surveyService.add(survey);
+        Optional<Survey> newSurvey = surveyService.add(survey.getCompany().getId(), survey);
         if(newSurvey.isPresent()) {
             ra.addFlashAttribute("successMessage",
-                    "Опрос " + survey.getName() + " успешно добавлен!");
+                    "Опрос \"" + survey.getName() + "\" успешно добавлен!");
         } else {
             ra.addFlashAttribute("errorMessage",
-                    "Опрос " + survey.getName() + " уже зарегистрирован!");
+                    "Опрос \"" + survey.getName() + "\" уже зарегистрирован!");
         }
         return "redirect:/survey";
     }

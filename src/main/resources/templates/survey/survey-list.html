@@ -9,18 +9,12 @@
 <th:block th:replace="page/fragments.html :: page-header"/>
 
 <div class="container-fluid text-center">
-  <h1>Список опросов для прохождения</h1>
-  <p th:if="${errorMessage != null}" class="alert alert-danger">
-    [[${errorMessage}]]
-  </p>
-  <p th:if="${successMessage != null}" class="alert alert-success">
-    [[${successMessage}]]
-  </p>
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
       <th>ID</th>
       <th>Название:</th>
+      <th>Компания-инициатор:</th>
       <th>Действие:</th>
     </tr>
     </thead>
@@ -29,6 +23,9 @@
       <td>[[${survey.id}]]</td>
       <td>
         <a th:href="@{'/survey/' + ${survey.id}}">[[${survey.name}]]</a>
+      </td>
+      <td>
+        <a th:href="@{'/company/' + ${survey.company.id}}">[[${survey.company.name}]]</a>
       </td>
       <td>
         <a th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-primary">Редактировать</a>

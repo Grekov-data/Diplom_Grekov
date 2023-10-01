@@ -15,13 +15,13 @@
   <div th:if="${survey != null}" class="card-body">
     <h5 class="card-title">[[${survey.name}]] (id [[${survey.id}]])</h5>
     <p>Здесь должно быть описание и прочее...</p>
-    <a th:href="@{/survey}" class="btn btn-primary">Обратно к опросам</a>
+    <a th:href="@{/survey}" class="btn btn-primary">К опросам</a>
   </div>
 
   <div th:if="${survey == null}" class="card-body">
     <h5 class="card-title bg-danger text-light">Опрос не найден</h5>
     <p class="card-text">Указан неверный id опроса</p>
-    <a th:href="@{/survey}" class="btn btn-primary">Обратно к опросам</a>
+    <a th:href="@{/survey}" class="btn btn-primary">К опросам</a>
   </div>
 </div>
 

@@ -3,6 +3,10 @@ package org.datko.diplom_grekov.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Data
 @Entity
 @Table(name = "user_t")
@@ -22,6 +26,20 @@ public class User {
 
     @Column(name = "email_f", nullable = false)
     private String email;                           //эл.почта
+
+    @Column(name = "registrated_date_f", nullable = false)
+    private Date registrationDate;
+
+    /*private String getFormattedGender() {
+        String genderString;
+        if (gender == true) {
+            genderString = "мужской";
+        }
+        else {
+            genderString = "женский";
+        }
+        return genderString;
+    }*/
 
     //Добавить после Spring Security
     /*@Column(name = "password_f", nullable = false)

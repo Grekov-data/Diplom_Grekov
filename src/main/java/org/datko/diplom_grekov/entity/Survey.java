@@ -3,6 +3,8 @@ package org.datko.diplom_grekov.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Objects;
+
 @Data
 @Entity
 @Table(name = "survey_t")
@@ -14,6 +16,28 @@ public class Survey {
     @Column(name = "name_f", nullable = false)
     private String name;                                    //название опроса
 
+    @Column(name = "is_active_f", nullable = false)
+    private Boolean isActive;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Survey survey = (Survey) o;
+        return Objects.equals(id, survey.id) && Objects.equals(name, survey.name) && Objects.equals(isActive, survey.isActive);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, isActive);
+    }
+
+    /*@OneToMany(mappedBy = "survey")
+    private Set<ObjectSurv> objectsSurv;*/
 
     //добавить зависимость с той компанией, которая создала опрос
 

@@ -7,16 +7,19 @@
 </head>
 <body>
 <th:block th:replace="page/fragments.html :: page-header"/>
-
+<div>
 <div class="card">
   <div class="card-header bg-dark text-light">
     Пользователь
   </div>
   <div th:if="${user != null}" class="card-body">
-    <h5 class="card-title">[[${user.name}]] (id [[${user.id}]]) <a th:href="@{'/user/update/' + ${user.id}}" class="btn btn-primary">Редактировать профиль</a></h5>
-    <p class="card-text">Возраст - [[${user.age}]]
-      <br>
-      Эл.почта: [[${user.email}]]
+    <h5 class="card-title">[[${user.name}]] (id [[${user.id}]])
+      <a th:href="@{'/user/update/' + ${user.id}}" class="btn btn-primary">Редактировать профиль</a>
+    </h5>
+    <p class="card-text">
+    <p>Возраст - [[${user.age}]], пол - [[${user.gender}]]</p>
+    <p>Эл.почта: [[${user.email}]]</p>
+    <p class="text-secondary">Зарегистрирован: [[${user.RegistrationDate}]]</p>
     </p>
     <a th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger">Удалить профиль</a>
   </div>
@@ -27,7 +30,7 @@
     <a th:href="@{/}" class="btn btn-primary">На главную</a>
   </div>
 </div>
-
+</div>
 <th:block th:replace="page/fragments.html :: page-footer"/>
 </body>
 </html>

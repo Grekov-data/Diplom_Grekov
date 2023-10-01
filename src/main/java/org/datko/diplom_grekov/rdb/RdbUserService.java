@@ -6,6 +6,7 @@ import org.datko.diplom_grekov.rdb.repository.UserRepository;
 import org.datko.diplom_grekov.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,6 +30,8 @@ public class RdbUserService implements UserService {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return Optional.empty();
         }
+        user.setRegistrationDate(new Date());
+        /*user.setGender(true);*/
         return Optional.of(userRepository.save(user));
     }
 
@@ -48,6 +51,7 @@ public class RdbUserService implements UserService {
                 (duplicatedByEmailUser.isEmpty() ||
                         Objects.equals(duplicatedByEmailUser.get().getId(), id))) {
             user.setId(id);
+            user.setRegistrationDate(updated.get().getRegistrationDate());
             return Optional.of(userRepository.save(user));
         } else {
             return Optional.empty();

@@ -19,13 +19,23 @@
       Эл.почта: [[${company.email}]],
       <br>
       Сайт: <a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a></p>
-    <a th:href="@{/company}" class="btn btn-primary">Обратно к компаниям</a>
+    <a th:href="@{'/survey/new/' + ${company.id}}" class="btn btn-success">Добавить новый опрос</a>
+    <a th:href="@{/company}" class="btn btn-primary">К компаниям</a>
+
+    <p>
+      Опросы компании:
+    <ol>
+      <li th:each="survey: ${company.surveys}">
+        [[${survey.name}]]
+      </li>
+    </ol>
+    </p>
   </div>
 
   <div th:if="${company == null}" class="card-body">
     <h5 class="card-title bg-danger text-light">Компания не найдена</h5>
     <p class="card-text">Указан неверный id компании</p>
-    <a th:href="@{/company}" class="btn btn-primary">Обратно к компаниям</a>
+    <a th:href="@{/company}" class="btn btn-primary">К компаниям</a>
   </div>
 </div>
 

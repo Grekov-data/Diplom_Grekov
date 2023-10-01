@@ -3,6 +3,8 @@ package org.datko.diplom_grekov.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name = "company_t")
@@ -22,6 +24,9 @@ public class Company {
 
     @Column(name = "email_f", nullable = false)
     private String email;                                           //эл.почта
+
+    @OneToMany(mappedBy = "company")
+    private Set<Survey> surveys;
 
     /*@Column(name = "password_f", nullable = false)
     private String password;*/                                        //пароль от профиля компании

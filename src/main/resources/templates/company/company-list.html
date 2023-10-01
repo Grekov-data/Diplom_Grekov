@@ -9,13 +9,6 @@
 <th:block th:replace="page/fragments.html :: page-header"/>
 
 <div class="container-fluid text-center">
-  <h1>Компании, зарегистрированные на сайте</h1>
-  <p th:if="${errorMessage != null}" class="alert alert-danger">
-    [[${errorMessage}]]
-  </p>
-  <p th:if="${successMessage != null}" class="alert alert-success">
-    [[${successMessage}]]
-  </p>
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
