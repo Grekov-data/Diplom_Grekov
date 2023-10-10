@@ -8,7 +8,6 @@ import org.datko.diplom_grekov.service.CompanyService;
 import org.datko.diplom_grekov.service.SurveyService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class RdbSurveyService implements SurveyService {
     }
 
     @Override
-    public Optional<Survey> findByCompanyId(Integer companyId) {
+    public Optional<Survey> findByCompanyId(Integer companyId, Survey survey) {
         return Optional.empty();
     }
 
@@ -61,8 +60,29 @@ public class RdbSurveyService implements SurveyService {
                 (duplicatedByNameSurvey.isEmpty() ||
                         Objects.equals(duplicatedByNameSurvey.get().getId(), id))) {
             survey.setId(id);
+            survey.setField(updated.get().getField());
             survey.setCompany(updated.get().getCompany());
             survey.setIsActive(updated.get().getIsActive());
+            return Optional.of(surveyRepository.save(survey));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<Survey> changeIsActive(Integer id, Survey survey) {
+        Optional<Survey> updated = findById(id);
+        if (updated.isPresent()) {
+            survey.setId(id);
+            survey.setField(updated.get().getField());
+            survey.setName(updated.get().getName());
+            survey.setDescription(updated.get().getDescription());
+            survey.setCompany(updated.get().getCompany());
+            if (updated.get().getIsActive() == true) {
+                survey.setIsActive(false);
+            } else {
+                survey.setIsActive(true);
+            }
             return Optional.of(surveyRepository.save(survey));
         } else {
             return Optional.empty();

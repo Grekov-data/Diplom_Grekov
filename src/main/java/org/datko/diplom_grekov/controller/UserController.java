@@ -48,7 +48,7 @@ public class UserController {
             ra.addFlashAttribute("errorMessage",
                     "Пользователь с эл.почтой " + user.getEmail() + " уже зарегистрирован!");
         }
-        return "redirect:/";
+        return "redirect:/authorization/log-in";
     }
 
     @GetMapping("/delete/{id}")                                  //удаление пользователя

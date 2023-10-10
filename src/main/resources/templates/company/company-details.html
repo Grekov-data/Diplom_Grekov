@@ -8,35 +8,70 @@
 <body>
 <th:block th:replace="page/fragments.html :: page-header"/>
 
-<div class="card">
-  <div class="card-header bg-dark text-light">
-    Организация
-  </div>
-  <div th:if="${company != null}" class="card-body">
-    <h5 class="card-title">[[${company.name}]] (id [[${company.id}]])</h5>
-    <p class="card-text">Сфера деятельности - [[${company.field}]]
-      <br><br>
-      Эл.почта: [[${company.email}]],
-      <br>
-      Сайт: <a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a></p>
-    <a th:href="@{'/survey/new/' + ${company.id}}" class="btn btn-success">Добавить новый опрос</a>
-    <a th:href="@{/company}" class="btn btn-primary">К компаниям</a>
+<div>
 
-    <p>
-      Опросы компании:
-    <ol>
-      <li th:each="survey: ${company.surveys}">
-        [[${survey.name}]]
-      </li>
-    </ol>
-    </p>
+  <div class="card">
+
+    <div class="card-header bg-dark text-light">
+      Организация
+      <a th:href="@{'/company/update/' + ${company.id}}" class="btn btn-warning btn-sm">ред.</a>
+    </div>
+
+    <div th:if="${company != null}" class="card-body d-flex justify-content-between">
+
+      <div class="col-4">
+        <div>
+          <h5 class="card-title">[[${company.name}]] (id [[${company.id}]])</h5>
+        </div>
+
+        <p>Эл.почта: [[${company.email}]],</p>
+        <p>Сайт:
+          <a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a>
+        </p>
+        <a th:href="@{/company}" class="btn btn-primary">К компаниям</a>
+      </div>
+
+      <div class="text-center col-8 d-flex justify-content-center">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Название опроса:</th>
+            <th>Статус:</th>
+            <th>Описание:</th>
+            <th>Действие:</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="survey: ${company.surveys}">
+            <td>[[${survey.id}]]</td>
+            <td>
+              <a th:href="@{'/survey/' + ${survey.id}}">[[${survey.name}]]</a>
+            </td>
+            <td th:href="@{'/survey/' + ${survey.id}}">[[${survey.isActive}]]</td>
+            <td th:href="@{'/survey/' + ${survey.id}}">[[${survey.description}]]</td>
+            <td>
+              <a th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-primary"> ред. </a>
+              <a th:href="@{'/survey/delete/' + ${survey.id}}" class="btn btn-danger"> X </a>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" class="text-center">
+              <a th:href="@{'/survey/new/' + ${company.id}}" class="btn btn-success">Добавить новый опрос</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--<div th:if="${company == null}" class="card-body">
+        <h5 class="card-title bg-danger text-light">Компания не найдена</h5>
+        <p class="card-text">Указан неверный id компании</p>
+        <a th:href="@{/company}" class="btn btn-primary">К компаниям</a>
+      </div>-->
+    </div>
   </div>
 
-  <div th:if="${company == null}" class="card-body">
-    <h5 class="card-title bg-danger text-light">Компания не найдена</h5>
-    <p class="card-text">Указан неверный id компании</p>
-    <a th:href="@{/company}" class="btn btn-primary">К компаниям</a>
-  </div>
 </div>
 
 <th:block th:replace="page/fragments.html :: page-footer"/>

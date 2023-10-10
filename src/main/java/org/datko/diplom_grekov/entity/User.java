@@ -5,7 +5,9 @@ import lombok.Data;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,6 +28,9 @@ public class User {
 
     @Column(name = "email_f", nullable = false)
     private String email;                           //эл.почта
+
+    /*@Column(name = "completedSurv_f", nullable = false)
+    private ArrayList<CompletedSurv> completedSurv = new ArrayList<CompletedSurv>();*/
 
     @Column(name = "registrated_date_f", nullable = false)
     private Date registrationDate;

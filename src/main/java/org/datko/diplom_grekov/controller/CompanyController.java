@@ -48,7 +48,7 @@ public class CompanyController {
             ra.addFlashAttribute("errorMessage",
                     "Компания " + company.getName() + " уже зарегистрирована!");
         }
-        return "redirect:/company";
+        return "redirect:/authorization/log-in";
     }
 
     @GetMapping("/delete/{id}")                                      //удаление компании
@@ -96,6 +96,6 @@ public class CompanyController {
             ra.addFlashAttribute("errorMessage",
                     "Компания не была обновлена");
         }
-        return "redirect:/company";
+        return "redirect:/company/{id}";
     }
 }

@@ -8,21 +8,116 @@
 <body>
 <th:block th:replace="page/fragments.html :: page-header"/>
 
-<div class="card">
-  <div class="card-header bg-dark text-light">
-    Опрос
-  </div>
-  <div th:if="${survey != null}" class="card-body">
-    <h5 class="card-title">[[${survey.name}]] (id [[${survey.id}]])</h5>
-    <p>Здесь должно быть описание и прочее...</p>
-    <a th:href="@{/survey}" class="btn btn-primary">К опросам</a>
+<div>
+
+  <div class="card">
+
+    <div class="card-header bg-dark text-light">
+      Опрос
+      <a th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-warning btn-sm">ред.</a>
+    </div>
+
+  <div th:if="${survey != null}" class="card-body d-flex justify-content-between">
+
+    <div  class="col-4">
+      <div>
+          <div class="card-title d-flex">
+            <h5 class="col-10">
+              [[${survey.name}]] (id [[${survey.id}]])
+            </h5>
+          </div>
+      </div>
+      <div class="card-text mb-2">
+        <form method="post" th:action="@{'/survey/changeIsActive/' + ${survey.id}}" th:object="${survey}">
+          <button class="btn btn-success form-control btn-sm col-2" th:if="${survey.isActive == true}">Активен</button>
+          <button class="btn btn-danger form-control btn-sm col-2"  th:if="${survey.isActive == false}">Не активен</button>
+        </form>
+        <p class="card-text mb-2">Сфера - [[${survey.field}]]</p>
+        <p>Описание:</p>
+        <p>[[${survey.description}]]</p>
+        <p>Компания-инициатор:
+          <a th:href="@{'/company/' + ${survey.company.id}}">[[${survey.company.name}]]</a>
+        </p>
+        <a th:href="@{/survey}" class="btn btn-primary">К опросам</a>
+        <a th:if="${survey.isActive == true}" th:href="@{'/survey/take-survey/' + ${survey.id}}" class="btn btn-success">Пройти опрос</a>
+        <a th:if="${survey.isActive == false}" class="btn btn-danger" disabled>Прохождение недоступно</a>
+      </div>
+
+    </div>
+
+    <div class="text-center col-8">
+      <table class="table table-bordered">
+        <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Объект опроса:</th>
+          <th>Рейтинг:</th>
+          <th>Действие:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="objectSurv: ${survey.objectSurvs}">
+          <td>[[${objectSurv.id}]]</td>
+          <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">[[${objectSurv.name}]]</td>
+          <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">[[${objectSurv.rating}]]</td>
+          <td>
+            <a th:href="@{'/objectSurv/delete/' + ${objectSurv.id}}" class="btn btn-danger"> X </a>
+          </td>
+        </tr>
+        <tr th:if="${objectSurv == null}">
+          <td colspan="4">Необходимо добавить объекты</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div>
+        <form class="d-flex justify-content-center" method="post" th:action="@{/objectSurv/new}" th:object="${objectSurv}">
+          <div class="mb-3 row col-6">
+            <label class="col-sm-2 col-form-label" for="name">Объект: </label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" id="name" th:field="*{name}" required minlength="1">
+            </div>
+          </div>
+
+          <div class="mb-3 row d-none">
+            <label class="col-sm-2 col-form-label" for="rating">Рейтинг: </label>
+            <div class="col-sm-10">
+              <select class="form-select" id="rating" th:field="*{rating}">
+                <option th:value="0">0</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3 row d-none">
+            <label class="col-sm-2 col-form-label" for="survey">Опрос-контейнер: </label>
+            <div class="col-sm-10">
+              <select class="form-select" id="survey" th:field="*{survey}">
+                <option th:each="company : ${surveys}" th:value="${survey.id}">
+                  [[${survey.name}]]
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3 col-1 text-center">
+            <div class="col-sm-5">
+              <button class="btn btn-success form-control"> + </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
   </div>
 
-  <div th:if="${survey == null}" class="card-body">
-    <h5 class="card-title bg-danger text-light">Опрос не найден</h5>
-    <p class="card-text">Указан неверный id опроса</p>
-    <a th:href="@{/survey}" class="btn btn-primary">К опросам</a>
+    <!--<div th:if="${survey == null}" class="card-body">
+      <h5 class="card-title bg-danger text-light">Опрос не найден</h5>
+      <p class="card-text">Указан неверный id опроса</p>
+      <a th:href="@{/survey}" class="btn btn-primary">К опросам</a>
+    </div>-->
   </div>
+</div>
+
 </div>
 
 <th:block th:replace="page/fragments.html :: page-footer"/>

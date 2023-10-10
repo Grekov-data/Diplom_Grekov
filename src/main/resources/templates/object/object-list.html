@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Company-list</title>
+  <title>Object-list</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
@@ -13,30 +13,25 @@
     <thead class="table-dark">
     <tr>
       <th>ID</th>
-      <th>Название:</th>
-      <th>Email:</th>
-      <th>Сайт:</th>
+      <th>Опрос-контейнер:</th>
+      <th>название объекта:</th>
+      <th>рейтинг:</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="company: ${companies}">
-      <td>[[${company.id}]]</td>
+    <tr th:each="objectSurv: ${objectSurvs}">
+      <td>[[${objectSurv.id}]]</td>
       <td>
-        <a th:href="@{'/company/' + ${company.id}}">[[${company.name}]]</a>
+        <a th:href="@{'/survey/' + ${objectSurv.survey.id}}">[[${objectSurv.survey.name}]]</a>
       </td>
-      <td>[[${company.email}]]</td>
-      <td>
-        <a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a>
-      </td>
+      <td>[[${objectSurv.name}]]</td>
+      <td>[[${objectSurv.rating}]]</td>
     </tr>
-    <tr th:if="${companies == null}">
+    <tr th:if="${objectSurvs == null}">
       <td colspan="4">Нет записей</td>
     </tr>
     </tbody>
   </table>
-  <div>
-      <a th:href="@{/company/new}" class="btn btn-success form-control">Зарегистрировать компанию</a>
-  </div>
 </div>
 
 <th:block th:replace="page/fragments.html :: page-footer"/>

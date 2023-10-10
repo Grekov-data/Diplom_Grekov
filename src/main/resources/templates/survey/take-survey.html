@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Take-list</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<th:block th:replace="page/fragments.html :: page-header"/>
+
+<div class="text-center">
+  <table class="table table-bordered">
+    <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Объект опроса:</th>
+      <th>Рейтинг:</th>
+      <th>Действие:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="objectSurv: ${survey.objectSurvs}">
+      <td>[[${objectSurv.id}]]</td>
+      <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">[[${objectSurv.name}]]</td>
+      <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">[[${objectSurv.rating}]]
+        <form method="post" th:action="@{'/objectSurv/upRating/' + ${objectSurv.id}}" th:object="${objectSurv}">
+          <button class="btn btn-primary form-control">+ 1</button>
+        </form>
+      </td>
+      <td>
+        <a th:href="@{'/objectSurv/delete/' + ${objectSurv.id}}" class="btn btn-danger"> X </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<th:block th:replace="page/fragments.html :: page-footer"/>
+</body>
+</html>

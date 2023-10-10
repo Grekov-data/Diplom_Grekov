@@ -16,9 +16,6 @@ public class Company {
     @Column(name = "name_f", nullable = false)
     private String name;                                            //название
 
-    @Column(name = "field_f", nullable = false)
-    private String field;                                           //сфера деятельности
-
     @Column(name = "website_f", nullable = false)
     private String website;                                         //веб-сайт
 

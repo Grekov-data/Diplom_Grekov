@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,12 +17,18 @@ public class Survey {
     @Column(name = "name_f", nullable = false)
     private String name;                                    //название опроса
 
+    @Column(name = "description_f")
+    private String description;                             //описание
+
+    @Column(name = "field_f", nullable = false)
+    private String field;                                   //сфера для опроса
+
     @Column(name = "is_active_f", nullable = false)
-    private Boolean isActive;
+    private Boolean isActive;                               //активен ли опрос
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
+    private Company company;                                //компания, создавшая опрос
 
     @Override
     public boolean equals(Object o) {
@@ -36,8 +43,8 @@ public class Survey {
         return Objects.hash(id, name, isActive);
     }
 
-    /*@OneToMany(mappedBy = "survey")
-    private Set<ObjectSurv> objectsSurv;*/
+    @OneToMany(mappedBy = "survey")
+    private Set<ObjectSurv> objectSurvs;
 
     //добавить зависимость с той компанией, которая создала опрос
 

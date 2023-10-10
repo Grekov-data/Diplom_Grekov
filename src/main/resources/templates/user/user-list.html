@@ -35,13 +35,10 @@
       </td>
     </tr>
     <tr th:if="${users == null}">
-      <td colspan="4">Нет записей</td>
+      <td colspan="6">Нет записей</td>
     </tr>
     </tbody>
   </table>
-  <div>
-    <a th:href="@{/user/new}" class="btn btn-success form-control">Зарегистрироваться</a>
-  </div>
 </div>
 
 <th:block th:replace="page/fragments.html :: page-footer"/>

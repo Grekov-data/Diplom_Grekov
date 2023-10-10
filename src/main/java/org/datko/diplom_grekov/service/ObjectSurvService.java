@@ -1,6 +1,7 @@
 package org.datko.diplom_grekov.service;
 
 import org.datko.diplom_grekov.entity.ObjectSurv;
+import org.datko.diplom_grekov.entity.Survey;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -9,7 +10,8 @@ import java.util.Optional;
 public interface ObjectSurvService {
     Iterable<ObjectSurv> findAll();
     Optional<ObjectSurv> findById(Integer id);
-    Optional<ObjectSurv> add(ObjectSurv objectSurv);
+    Optional<ObjectSurv> findBySurveyId(Integer surveyId);
+    Optional<ObjectSurv> add(Integer surveyId, ObjectSurv objectSurv);
     Optional<ObjectSurv> deleteById(Integer id);
-    Optional<ObjectSurv> updateById(Integer id, ObjectSurv objectSurv);
+    Optional<ObjectSurv> upRating(Integer id, ObjectSurv objectSurv);
 }

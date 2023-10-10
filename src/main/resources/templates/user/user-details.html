@@ -11,10 +11,11 @@
 <div class="card">
   <div class="card-header bg-dark text-light">
     Пользователь
+    <a th:href="@{'/user/update/' + ${user.id}}" class="btn btn-warning btn-sm">ред.</a>
   </div>
   <div th:if="${user != null}" class="card-body">
     <h5 class="card-title">[[${user.name}]] (id [[${user.id}]])
-      <a th:href="@{'/user/update/' + ${user.id}}" class="btn btn-primary">Редактировать профиль</a>
+
     </h5>
     <p class="card-text">
     <p>Возраст - [[${user.age}]], пол - [[${user.gender}]]</p>

@@ -12,34 +12,33 @@
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
-      <th>ID</th>
-      <th>Название:</th>
-      <th>Компания-инициатор:</th>
-      <th>Действие:</th>
+      <th>id</th>
+      <th>Прохождение:</th>
+      <th>Сфера:</th>
+      <th>Опросы:</th>
+      <th>Описание:</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="survey: ${surveys}">
-      <td>[[${survey.id}]]</td>
-      <td>
-        <a th:href="@{'/survey/' + ${survey.id}}">[[${survey.name}]]</a>
+      <td class="col-1">[[${survey.id}]]</td>
+      <td class="col-1">
+        <a th:if="${survey.isActive == true}" th:href="@{'/survey/take-survey/' + ${survey.id}}" class="btn btn-success">Пройти</a>
+        <a th:if="${survey.isActive == false}" class="btn btn-danger" disabled>Недоступно</a>
       </td>
-      <td>
+      <td>[[${survey.field}]]</td>
+      <td class="col-4">
+        <a th:href="@{'/survey/' + ${survey.id}}">[[${survey.name}]]</a>
+         от компании
         <a th:href="@{'/company/' + ${survey.company.id}}">[[${survey.company.name}]]</a>
       </td>
-      <td>
-        <a th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-primary">Редактировать</a>
-        <a th:href="@{'/survey/delete/' + ${survey.id}}" class="btn btn-danger">Удалить</a>
-      </td>
+      <td class="col-6">[[${survey.description}]]</td>
     </tr>
     <tr th:if="${surveys == null}">
-      <td colspan="4">Нет записей</td>
+      <td colspan="3">Нет записей</td>
     </tr>
     </tbody>
   </table>
-  <div>
-    <a th:href="@{/survey/new}" class="btn btn-success form-control">Создать опрос</a>
-  </div>
 </div>
 
 <th:block th:replace="page/fragments.html :: page-footer"/>
