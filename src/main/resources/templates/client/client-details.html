@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>User-details</title>
+  <title>Client-details</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
@@ -11,21 +11,21 @@
 <div class="card">
   <div class="card-header bg-dark text-light">
     Пользователь
-    <a th:href="@{'/user/update/' + ${user.id}}" class="btn btn-warning btn-sm">ред.</a>
+    <a th:href="@{'/client/update/' + ${client.id}}" class="btn btn-warning btn-sm">ред.</a>
   </div>
-  <div th:if="${user != null}" class="card-body">
-    <h5 class="card-title">[[${user.name}]] (id [[${user.id}]])
+  <div th:if="${client != null}" class="card-body">
+    <h5 class="card-title">[[${client.name}]] (id [[${client.id}]])
 
     </h5>
     <p class="card-text">
-    <p>Возраст - [[${user.age}]], пол - [[${user.gender}]]</p>
-    <p>Эл.почта: [[${user.email}]]</p>
-    <p class="text-secondary">Зарегистрирован: [[${user.RegistrationDate}]]</p>
+    <p>Возраст - [[${client.age}]], пол - [[${client.gender}]]</p>
+    <p>Эл.почта: [[${client.email}]]</p>
+    <p class="text-secondary">Зарегистрирован: [[${client.RegistrationDate}]]</p>
     </p>
-    <a th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger">Удалить профиль</a>
+    <a th:href="@{'/client/delete/' + ${client.id}}" class="btn btn-danger">Удалить профиль</a>
   </div>
 
-  <div th:if="${user == null}" class="card-body">
+  <div th:if="${client == null}" class="card-body">
     <h5 class="card-title bg-danger text-light">Пользователь не найден</h5>
     <p class="card-text">Указан неверный id пользователя</p>
     <a th:href="@{/}" class="btn btn-primary">На главную</a>

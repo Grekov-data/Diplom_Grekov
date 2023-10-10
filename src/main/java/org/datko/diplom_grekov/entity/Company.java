@@ -16,7 +16,7 @@ public class Company {
     @Column(name = "name_f", nullable = false)
     private String name;                                            //название
 
-    @Column(name = "website_f", nullable = false)
+    @Column(name = "website_f")
     private String website;                                         //веб-сайт
 
     @Column(name = "email_f", nullable = false)

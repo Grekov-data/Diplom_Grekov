@@ -2,7 +2,6 @@ package org.datko.diplom_grekov.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.datko.diplom_grekov.entity.ObjectSurv;
-import org.datko.diplom_grekov.entity.Survey;
 import org.datko.diplom_grekov.service.ObjectSurvService;
 import org.datko.diplom_grekov.service.SurveyService;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -46,6 +44,19 @@ public class ObjectSurvController {
                     "Объект \"" + objectSurv.getName() + "\" уже зарегистрирован!");
         }
         return "redirect:/survey/" + objectSurv.getSurvey().getId();
+    }
+
+    @GetMapping("/delete/{id}")                                      //удаление опроса
+    public String delete(@PathVariable Integer id, ObjectSurv objectSurv, RedirectAttributes ra) {
+        Optional<ObjectSurv> removed = objectSurvService.deleteById(id);
+        if(removed.isPresent()) {
+            ra.addFlashAttribute("successMessage",
+                    "Объект опроса " + removed.get().getName() + " успешно удален!");
+        } else {
+            ra.addFlashAttribute("errorMessage",
+                    "Некорректный id для удаления!");
+        }
+        return "redirect:/survey/" + removed.get().getSurvey().getId();
     }
 
     @PostMapping("/upRating/{id}")                                  //увеличение рейтинга для объекта

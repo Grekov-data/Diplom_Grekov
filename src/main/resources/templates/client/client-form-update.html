@@ -2,13 +2,13 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User-form-update</title>
+    <title>Client-form-update</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <div class="container-sm align-content-center text-center">
     <h1>Редактирование ваших данных:</h1>
-    <form method="post" th:action="@{'/user/update/' + ${user.id}}" th:object="${user}">
+    <form method="post" th:action="@{'/client/update/' + ${client.id}}" th:object="${client}">
         <div class="mb-3 row">
             <label class="col-sm-2 col-form-label" for="name">ФИО: </label>
             <div class="col-sm-10">
@@ -50,7 +50,7 @@
                 <button class="btn btn-success form-control">Сохранить изменения</button>
             </div>
             <div class="col-sm-5">
-                <a th:href="@{'/user/' + ${user.id}}" class="btn btn-danger form-control">Отменить</a>
+                <a th:href="@{'/client/' + ${client.id}}" class="btn btn-danger form-control">Отменить</a>
             </div>
         </div>
     </form>

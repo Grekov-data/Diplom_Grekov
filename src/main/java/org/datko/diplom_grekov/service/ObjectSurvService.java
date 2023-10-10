@@ -1,7 +1,6 @@
 package org.datko.diplom_grekov.service;
 
 import org.datko.diplom_grekov.entity.ObjectSurv;
-import org.datko.diplom_grekov.entity.Survey;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

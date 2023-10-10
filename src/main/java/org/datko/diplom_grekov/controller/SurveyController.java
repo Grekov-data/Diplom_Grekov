@@ -85,7 +85,7 @@ public class SurveyController {
             ra.addFlashAttribute("errorMessage",
                     "Некорректный id для удаления!");
         }
-        return "redirect:/company/";
+        return "redirect:/company/" + removed.get().getCompany().getId();
     }
 
     @GetMapping("{id}")                                             //лист с детальной информацией об опросе

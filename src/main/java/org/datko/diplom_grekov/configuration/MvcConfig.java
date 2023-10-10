@@ -9,7 +9,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // связываем путь /login с предсатвлением log-in.html
-        registry.addViewController("/authorization/log-in").setViewName("login");
+        // связываем путь /login с предсатвлением login.html
+        registry.addViewController("/login").setViewName("login");
     }
 }

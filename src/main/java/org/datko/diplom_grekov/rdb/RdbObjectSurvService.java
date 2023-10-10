@@ -1,16 +1,13 @@
 package org.datko.diplom_grekov.rdb;
 
 import lombok.RequiredArgsConstructor;
-import org.datko.diplom_grekov.entity.Company;
 import org.datko.diplom_grekov.entity.ObjectSurv;
 import org.datko.diplom_grekov.entity.Survey;
 import org.datko.diplom_grekov.rdb.repository.ObjectSurvRepository;
-import org.datko.diplom_grekov.rdb.repository.SurveyRepository;
 import org.datko.diplom_grekov.service.ObjectSurvService;
 import org.datko.diplom_grekov.service.SurveyService;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor

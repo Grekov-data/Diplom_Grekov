@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Log-in</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<th:block th:replace="page/fragments.html :: page-header"/>
+
+<div class="d-flex mt-5">
+
+  <div class="col-2"></div>
+
+  <div class="align-content-center text-center col-3 card bg-dark">
+    <div class="card-header bg-warning">
+      <h1>Авторизация:</h1>
+    </div>
+    <form method="post" th:action="@{/login}" class="mb-3">
+      <div class="mb-3 mt-4">
+        <label for="login" class="col-form-label text-light">Логин</label>
+        <div class="align-content-center text-center">
+          <input type="text" class="form-control" id="login" name="username">
+        </div>
+      </div>
+      <div class="mb-2">
+        <label for="password" class="col-form-label text-light">Пароль</label>
+        <div class="align-content-center text-center">
+          <input type="password" class="form-control" id="password" name="password">
+        </div>
+      </div>
+
+      <div class="mb-1 row">
+        <div class="col-sm-1"></div>
+        <div class="mt-5">
+          <button class="btn btn-success form-control">Войти</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-2"></div>
+
+  <div class="align-content-center text-center col-3 card bg-dark">
+    <div class="card-header bg-warning">
+      <h1>Регистрация:</h1>
+    </div>
+    <form method="post" th:action="@{/registration}">
+      <div class="mb-1">
+        <label for="new-login" class="col-form-label text-light">Логин</label>
+        <div class="align-content-center text-center">
+          <input type="text" class="form-control" id="new-login" name="login">
+        </div>
+      </div>
+      <div class="mb-1">
+        <label for="new-password" class="col-form-label text-light">Пароль</label>
+        <div class="align-content-center text-center">
+          <input type="password" class="form-control" id="new-password" name="password">
+        </div>
+      </div>
+      <div class="mb-1">
+        <label for="new-password-confirmation" class="col-form-label text-light">Подтверждение пароля</label>
+        <div class="align-content-center text-center">
+          <input type="password" class="form-control" id="new-password-confirmation" name="passwordConfirmation">
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <div class="col-sm-1"></div>
+        <div class="mt-2">
+          <button class="btn btn-success form-control">Зарегистрироваться</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-2"></div>
+
+</div>
+
+<th:block th:replace="page/fragments.html :: page-footer"/>
+</body>
+</html>

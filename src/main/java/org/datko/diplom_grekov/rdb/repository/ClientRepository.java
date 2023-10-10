@@ -1,14 +1,12 @@
 package org.datko.diplom_grekov.rdb.repository;
 
-
-import org.datko.diplom_grekov.entity.User;
+import org.datko.diplom_grekov.entity.Client;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer> {
-    Optional<User> findUserByLogin(String login);
+public interface ClientRepository extends CrudRepository<Client, Integer> {
+    Optional<Client> findByEmail(String email);
 }

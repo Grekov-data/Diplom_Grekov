@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>User-list</title>
+  <title>Client-list</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
@@ -21,20 +21,20 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user: ${users}">
-      <td>[[${user.id}]]</td>
+    <tr th:each="client: ${clients}">
+      <td>[[${client.id}]]</td>
       <td>
-        <a th:href="@{'/user/' + ${user.id}}">[[${user.name}]]</a>
+        <a th:href="@{'/client/' + ${client.id}}">[[${client.name}]]</a>
       </td>
-      <td>[[${user.gender}]]</td>
-      <td>[[${user.email}]]</td>
-      <td>[[${user.age}]]</td>
+      <td>[[${client.gender}]]</td>
+      <td>[[${client.email}]]</td>
+      <td>[[${client.age}]]</td>
       <td>
-        <a th:href="@{'/user/update/' + ${user.id}}" class="btn btn-primary">Редактировать</a>
-        <a th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger">Удалить</a>
+        <a th:href="@{'/client/update/' + ${client.id}}" class="btn btn-primary">Редактировать</a>
+        <a th:href="@{'/client/delete/' + ${client.id}}" class="btn btn-danger">Удалить</a>
       </td>
     </tr>
-    <tr th:if="${users == null}">
+    <tr th:if="${clients == null}">
       <td colspan="6">Нет записей</td>
     </tr>
     </tbody>
