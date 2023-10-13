@@ -7,28 +7,28 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "client_t")
+@Table(name = "client")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name_f", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;                            //ФИО
 
-    @Column(name = "age_f", nullable = false)
+    @Column(name = "age", nullable = false)
     private Integer age;                            //возраст
 
-    @Column(name = "gender_f", nullable = false)
+    @Column(name = "gender", nullable = false)
     private String gender;                          //пол (муж./жен.)
 
-    @Column(name = "email_f", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;                           //эл.почта
 
     /*@Column(name = "completedSurv_f", nullable = false)
     private ArrayList<CompletedSurv> completedSurv = new ArrayList<CompletedSurv>();*/
 
-    @Column(name = "registrated_date_f", nullable = false)
+    @Column(name = "registrated_date", nullable = false)
     private Date registrationDate;
 
     /*private String getFormattedGender() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Fragments-for-page</title>
@@ -19,12 +19,16 @@
           <li><a th:href="@{/objectSurv}" class="nav-link px-2 text-white">Перечень объектов</a></li>
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 text-end" role="search">
+        <!--<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 text-end" role="search">
           <input type="search" class="form-control form-control-dark" placeholder="Поиск..." aria-label="Поиск">
-        </form>
+        </form>-->
+        <span class="col-sm-1"  sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}"></span>
 
-        <div class="text-end">
-          <a th:href="@{/login}" type="button" class="btn btn-warning">Авторизация</a>
+        <div class="text-end d-flex">
+          <form sec:authorize="isAuthenticated()" class="d-flex" role="search" method="post" th:action="@{/logout}">
+            <button class="btn btn-warning">Выйти</button>
+          </form>
+          <a sec:authorize="!isAuthenticated()" th:href="@{/login}" type="button" class="btn btn-warning">Авторизация</a>
         </div>
       </div>
     </div>

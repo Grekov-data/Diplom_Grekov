@@ -7,16 +7,16 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "object_surv_t")
+@Table(name = "object_surv")
 public class ObjectSurv {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name_f", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;                                    //название объекта для опроса
 
-    @Column(name = "rating_f", nullable = false)              //рейтинг объекта
+    @Column(name = "rating", nullable = false)              //рейтинг объекта
     private Integer rating;
 
     @ManyToOne

@@ -8,22 +8,22 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "survey_t")
+@Table(name = "survey")
 public class Survey {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name_f", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;                                    //название опроса
 
-    @Column(name = "description_f")
+    @Column(name = "description")
     private String description;                             //описание
 
-    @Column(name = "field_f", nullable = false)
+    @Column(name = "field", nullable = false)
     private String field;                                   //сфера для опроса
 
-    @Column(name = "is_active_f", nullable = false)
+    @Column(name = "is_active", nullable = false)
     private Boolean isActive;                               //активен ли опрос
 
     @ManyToOne

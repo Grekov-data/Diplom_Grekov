@@ -10,12 +10,9 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,13 +25,21 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    // Конфигурация управляющая доступом к обработчикам (запросам)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/", "", "company/new", "client/new", "/registration", "webjars/**", "css/**", "images/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/", "", "/registration", "webjars/**", "css/**", "images/**").permitAll()
+                        .requestMatchers(
+                                "/company/new",
+                                "/company/delete/*",
+                                "/company/update/*",
+                                "/survey/new/*",
+                                "/survey/delete/*",
+                                "/survey/update/*"
+                        ).hasRole("ADMIN")
+                        .anyRequest().permitAll()
+                        /*.anyRequest().authenticated()*/)
 
                 .formLogin((form) -> form
                         .loginPage("/login").permitAll())
@@ -44,7 +49,6 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    // расскажу позже
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

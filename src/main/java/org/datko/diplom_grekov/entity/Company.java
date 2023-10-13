@@ -7,16 +7,16 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "company_t")
+@Table(name = "company")
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name_f", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;                                            //название
 
-    @Column(name = "website_f")
+    @Column(name = "website")
     private String website;                                         //веб-сайт
 
     @Column(name = "email_f", nullable = false)
