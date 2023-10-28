@@ -6,8 +6,6 @@ import org.datko.diplom_grekov.rdb.repository.ClientRepository;
 import org.datko.diplom_grekov.service.ClientService;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,11 +25,6 @@ public class RdbClientService implements ClientService {
 
     @Override
     public Optional<Client> add(Client client) {
-        if (clientRepository.findByEmail(client.getEmail()).isPresent()) {
-            return Optional.empty();
-        }
-        client.setRegistrationDate(new Date());
-        /*client.setGender(true);*/
         return Optional.of(clientRepository.save(client));
     }
 
@@ -46,10 +39,7 @@ public class RdbClientService implements ClientService {
 
     public Optional<Client> updateById(Integer id, Client client) {
         Optional<Client> updated = findById(id);
-        Optional<Client> duplicatedByEmailClient = clientRepository.findByEmail(client.getEmail());
-        if (updated.isPresent() &&
-                (duplicatedByEmailClient.isEmpty() ||
-                        Objects.equals(duplicatedByEmailClient.get().getId(), id))) {
+        if (updated.isPresent()) {
             client.setId(id);
             client.setRegistrationDate(updated.get().getRegistrationDate());
             return Optional.of(clientRepository.save(client));

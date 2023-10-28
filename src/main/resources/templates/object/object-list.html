@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Object-list</title>
@@ -12,26 +12,33 @@
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
-      <th>ID</th>
+      <th sec:authorize="hasRole('ADMIN')" class="text-success">ID</th>
       <th>Опрос-контейнер:</th>
       <th>название объекта:</th>
       <th>рейтинг:</th>
+      <th sec:authorize="hasRole('ADMIN')" class="text-success">Действие:</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="objectSurv: ${objectSurvs}">
-      <td>[[${objectSurv.id}]]</td>
+      <td sec:authorize="hasRole('ADMIN')">[[${objectSurv.id}]]</td>
       <td>
         <a th:href="@{'/survey/' + ${objectSurv.survey.id}}">[[${objectSurv.survey.name}]]</a>
       </td>
       <td>[[${objectSurv.name}]]</td>
       <td>[[${objectSurv.rating}]]</td>
+      <td sec:authorize="hasRole('ADMIN')" class="text-success">
+        <a th:href="@{'/objectSurv/delete/' + ${objectSurv.id}}" class="btn btn-danger">Удалить</a>
+      </td>
     </tr>
     <tr th:if="${objectSurvs == null}">
-      <td colspan="4">Нет записей</td>
+      <td colspan="5">Нет записей</td>
     </tr>
     </tbody>
   </table>
+  <div>
+    <h5 sec:authorize="hasRole('ADMIN')" class="bg-dark text-success">Создание/добавление объектов опросов возможно только из карточки опросов!</h5>
+  </div>
 </div>
 
 <th:block th:replace="page/fragments.html :: page-footer"/>

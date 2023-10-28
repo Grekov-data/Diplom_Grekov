@@ -48,7 +48,7 @@ public class CompanyController {
             ra.addFlashAttribute("errorMessage",
                     "Компания " + company.getName() + " уже зарегистрирована!");
         }
-        return "redirect:/";
+        return "redirect:/company";
     }
 
     @GetMapping("/delete/{id}")                                      //удаление компании
@@ -61,7 +61,7 @@ public class CompanyController {
             ra.addFlashAttribute("errorMessage",
                     "Некорректный id для удаления!");
         }
-        return "redirect:/company/";
+        return "redirect:/company";
     }
 
     @GetMapping("{id}")                                             //лист с детальной информацией о компании

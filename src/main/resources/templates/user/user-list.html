@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <title>Client-list</title>
+  <title>User-list</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
@@ -12,23 +12,22 @@
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
-      <th sec:authorize="hasRole('ADMIN')" class="text-success">ID</th>
-      <th>ФИО:</th>
-      <th>Пол:</th>
+      <th class="text-success">ID</th>
+      <th>Логин:</th>
+      <th>Роль (права):</th>
       <th>Дата регистрации:</th>
-      <th sec:authorize="hasRole('ADMIN')" class="text-success">Действие:</th>
+      <th class="text-success">Действие:</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="client: ${clients}">
-      <td sec:authorize="hasRole('ADMIN')">[[${client.id}]]</td>
+    <tr th:each="user: ${users}">
+      <td>[[${user.id}]]</td>
       <td>
-        <a sec:authorize="hasRole('ADMIN')" th:href="@{'/client/' + ${client.id}}">[[${client.name}]]</a>
-        <a sec:authorize="hasRole('USER')">[[${client.name}]]</a>
+        <a th:href="@{'/user/' + ${user.id}}">[[${user.login}]]</a>
       </td>
-      <td>[[${client.gender}]]</td>
-      <td>[[${client.getFormattedRegistrationDate()}]]</td>
-      <td sec:authorize="hasRole('ADMIN')" class="text-success">
+      <td>[[${user.role}]]</td>
+      <td>[[${user.client.getFormattedRegistrationDate()}]]</td>
+      <td class="text-success">
         <a th:href="@{'/client/update/' + ${client.id}}" class="btn btn-primary">Редактировать</a>
         <a th:href="@{'/client/delete/' + ${client.id}}" class="btn btn-danger">Удалить</a>
       </td>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Take-list</title>
@@ -12,27 +12,32 @@
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
-      <th>ID</th>
+      <th sec:authorize="hasRole('ADMIN')" class="text-success">ID</th>
       <th>Объект опроса:</th>
-      <th>Рейтинг:</th>
-      <th>Действие:</th>
+      <th sec:authorize="isAuthenticated()">Рейтинг:</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="objectSurv: ${survey.objectSurvs}">
-      <td>[[${objectSurv.id}]]</td>
-      <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">[[${objectSurv.name}]]</td>
-      <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">[[${objectSurv.rating}]]
-        <form method="post" th:action="@{'/objectSurv/upRating/' + ${objectSurv.id}}" th:object="${objectSurv}">
-          <button class="btn btn-primary form-control">+ 1</button>
+      <td sec:authorize="hasRole('ADMIN')">[[${objectSurv.id}]]</td>
+      <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">
+        <h1 class="text-success">[[${objectSurv.name}]]</h1>
+      </td>
+      <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">
+        <h4 class="text-warning">[[${objectSurv.rating}]]</h4>
+        <form sec:authorize="isAuthenticated()" method="post" th:action="@{'/objectSurv/upRating/' + ${objectSurv.id}}" th:object="${objectSurv}">
+          <button class="btn btn-primary form-control">Проголосовать за [[${objectSurv.name}]]</button>
         </form>
       </td>
-      <td>
-        <a th:href="@{'/objectSurv/delete/' + ${objectSurv.id}}" class="btn btn-danger"> X </a>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <a th:href="@{'/survey/' + ${survey.id}}" class="btn btn-danger form-control">Отмена</a>
       </td>
     </tr>
     </tbody>
   </table>
+
 </div>
 
 <th:block th:replace="page/fragments.html :: page-footer"/>

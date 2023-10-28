@@ -1,12 +1,10 @@
 package org.datko.diplom_grekov.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.datko.diplom_grekov.entity.Company;
-import org.datko.diplom_grekov.entity.ObjectSurv;
-import org.datko.diplom_grekov.entity.Survey;
-import org.datko.diplom_grekov.service.CompanyService;
-import org.datko.diplom_grekov.service.ObjectSurvService;
-import org.datko.diplom_grekov.service.SurveyService;
+import org.datko.diplom_grekov.entity.*;
+import org.datko.diplom_grekov.service.*;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +23,20 @@ public class SurveyController {
 
     private final SurveyService surveyService;
     private final CompanyService companyService;
-    private final ObjectSurvService objectSurvService;
+    private final UserService userService;
+    private final ClientService clientService;
 
     @GetMapping("")                                                 //вывод листа со списком опросов
     public String findAll(Model model){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String login = userDetails.getUsername();
+        Optional<User> user = userService.findByLogin(login);
+        model.addAttribute("user", user.get());
+
         Iterable<Survey> surveys = surveyService.findAll();
         if (surveys.iterator().hasNext()) {
             model.addAttribute("surveys", surveys);
@@ -44,6 +52,8 @@ public class SurveyController {
         model.addAttribute("survey", survey);
         Iterable<Company> companies = companyService.findAll();
         model.addAttribute("companies", companies);
+        Boolean initiator = false;
+        model.addAttribute("initiator", initiator);
         return "survey/survey-form";
     }
 
@@ -59,6 +69,8 @@ public class SurveyController {
         model.addAttribute("survey", survey);
         Iterable<Company> companies = List.of(company.get());
         model.addAttribute("companies", companies);
+        Boolean initiator = true;
+        model.addAttribute("initiator", initiator);
         return "survey/survey-form";
     }
 
@@ -90,7 +102,17 @@ public class SurveyController {
 
     @GetMapping("{id}")                                             //лист с детальной информацией об опросе
     public String details(@PathVariable Integer id, Model model) {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String login = userDetails.getUsername();
+        Optional<User> user = userService.findByLogin(login);
+        model.addAttribute("user", user.get());
+
         Optional<Survey> survey = surveyService.findById(id);
+
         ObjectSurv objectSurv = new ObjectSurv();
         model.addAttribute("objectSurv", objectSurv);
         Iterable<Survey> surveys = List.of(survey.get());

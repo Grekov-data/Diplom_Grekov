@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Survey-details</title>
@@ -14,7 +14,7 @@
 
     <div class="card-header bg-dark text-light">
       Опрос
-      <a th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-warning btn-sm">ред.</a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-warning btn-sm text-success">ред.</a>
     </div>
 
   <div th:if="${survey != null}" class="card-body d-flex justify-content-between">
@@ -22,16 +22,21 @@
     <div  class="col-4">
       <div>
           <div class="card-title d-flex">
-            <h5 class="col-10">
-              [[${survey.name}]] (id [[${survey.id}]])
-            </h5>
+            <h5 class="col-10">[[${survey.name}]]</h5>
+            <h5 th:text="${checkAbil}"></h5>
+            <h5 sec:authorize="hasRole('ADMIN')" class="bg-dark text-success rounded-3">(id [[${survey.id}]])</h5>
           </div>
+
       </div>
       <div class="card-text mb-2">
-        <form method="post" th:action="@{'/survey/changeIsActive/' + ${survey.id}}" th:object="${survey}">
+        <form sec:authorize="hasRole('ADMIN')" method="post" th:action="@{'/survey/changeIsActive/' + ${survey.id}}" th:object="${survey}">
           <button class="btn btn-success form-control btn-sm col-2" th:if="${survey.isActive == true}">Активен</button>
-          <button class="btn btn-danger form-control btn-sm col-2"  th:if="${survey.isActive == false}">Не активен</button>
+          <button class="btn btn-danger form-control btn-sm col-2" th:if="${survey.isActive == false}">Не активен</button>
         </form>
+        <div sec:authorize="hasRole('USER')">
+        <button class="btn btn-success form-control btn-sm col-2" th:if="${survey.isActive == true}">Активен</button>
+        <button class="btn btn-danger form-control btn-sm col-2" th:if="${survey.isActive == false}">Не активен</button>
+      </div>
         <p class="card-text mb-2">Сфера - [[${survey.field}]]</p>
         <p>Описание:</p>
         <p>[[${survey.description}]]</p>
@@ -39,8 +44,9 @@
           <a th:href="@{'/company/' + ${survey.company.id}}">[[${survey.company.name}]]</a>
         </p>
         <a th:href="@{/survey}" class="btn btn-primary">К опросам</a>
-        <a th:if="${survey.isActive == true}" th:href="@{'/survey/take-survey/' + ${survey.id}}" class="btn btn-success">Пройти опрос</a>
+        <a th:if="${survey.isActive == true}" th:href="@{'/survey/take-survey/' + ${survey.id}}" class="btn btn-success" disabled>Пройти опрос</a>
         <a th:if="${survey.isActive == false}" class="btn btn-danger" disabled>Прохождение недоступно</a>
+        <a th:each="completedSurv: ${user.client.completedSurveys}" th:class="${completedSurv.equals(survey)} == true ? 'btn btn-warning' : 'd-none'">Опрос пройден</a>
       </div>
 
     </div>
@@ -49,18 +55,22 @@
       <table class="table table-bordered">
         <thead class="table-dark">
         <tr>
-          <th>ID</th>
+          <th sec:authorize="hasRole('ADMIN')" class="text-success">ID</th>
           <th>Объект опроса:</th>
           <th>Рейтинг:</th>
-          <th>Действие:</th>
+          <th sec:authorize="hasRole('ADMIN')" class="text-success">Действие:</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="objectSurv: ${survey.objectSurvs}">
-          <td>[[${objectSurv.id}]]</td>
-          <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">[[${objectSurv.name}]]</td>
-          <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">[[${objectSurv.rating}]]</td>
-          <td>
+          <td sec:authorize="hasRole('ADMIN')">[[${objectSurv.id}]]</td>
+          <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">
+            <h1 class="text-success">[[${objectSurv.name}]]</h1>
+          </td>
+          <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">
+            <h4 class="text-warning">[[${objectSurv.rating}]]</h4>
+          </td>
+          <td sec:authorize="hasRole('ADMIN')">
             <a th:href="@{'/objectSurv/delete/' + ${objectSurv.id}}" class="btn btn-danger"> X </a>
           </td>
         </tr>
@@ -70,10 +80,10 @@
         </tbody>
       </table>
 
-      <div>
-        <form class="d-flex justify-content-center" method="post" th:action="@{/objectSurv/new}" th:object="${objectSurv}">
+      <div th:if="${survey.isActive == false}">
+        <form class="d-flex justify-content-center bg-dark p-3 rounded-3" method="post" th:action="@{/objectSurv/new}" th:object="${objectSurv}">
           <div class="mb-3 row col-6">
-            <label class="col-sm-2 col-form-label" for="name">Объект: </label>
+            <label class="col-sm-2 col-form-label bg-dark text-success" for="name">Объект: </label>
             <div class="col-sm-10">
               <input class="form-control" type="text" id="name" th:field="*{name}" required minlength="1">
             </div>

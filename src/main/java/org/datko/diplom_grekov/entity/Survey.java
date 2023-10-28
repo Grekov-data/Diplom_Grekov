@@ -46,6 +46,8 @@ public class Survey {
     @OneToMany(mappedBy = "survey")
     private Set<ObjectSurv> objectSurvs;
 
+
+
     //добавить зависимость с той компанией, которая создала опрос
 
     //Добавить список объектов (предметы для вопроса) из другой таблицы при создании этого объекта

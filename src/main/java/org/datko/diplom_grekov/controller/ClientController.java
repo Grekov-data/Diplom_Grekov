@@ -46,7 +46,7 @@ public class ClientController {
                     "Пользователь " + client.getName() + " успешно зарегистрирован!");
         } else {
             ra.addFlashAttribute("errorMessage",
-                    "Пользователь с эл.почтой " + client.getEmail() + " уже зарегистрирован!");
+                    "Пользователь " + client.getName() + " уже зарегистрирован!");
         }
         return "redirect:/";
     }
@@ -96,6 +96,6 @@ public class ClientController {
             ra.addFlashAttribute("errorMessage",
                     "Данные пользователя не были обновлены");
         }
-        return "redirect:/client/{id}";
+        return "redirect:/user-details";
     }
 }

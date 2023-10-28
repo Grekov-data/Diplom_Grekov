@@ -1,9 +1,14 @@
 package org.datko.diplom_grekov.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.datko.diplom_grekov.entity.Client;
 import org.datko.diplom_grekov.entity.ObjectSurv;
+import org.datko.diplom_grekov.entity.User;
+import org.datko.diplom_grekov.service.ClientService;
 import org.datko.diplom_grekov.service.ObjectSurvService;
-import org.datko.diplom_grekov.service.SurveyService;
+import org.datko.diplom_grekov.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +25,7 @@ import java.util.Optional;
 public class ObjectSurvController {
 
     private final ObjectSurvService objectSurvService;
-    private final SurveyService surveyService;
+    private final UserService userService;
 
     @GetMapping("")                                                 //вывод листа со списком объектов
     public String findAll(Model model){
@@ -60,15 +65,18 @@ public class ObjectSurvController {
     }
 
     @PostMapping("/upRating/{id}")                                  //увеличение рейтинга для объекта
-    public String updateExisting(@PathVariable Integer id, ObjectSurv objectSurv/*, RedirectAttributes ra*/) {
-        Optional<ObjectSurv> updated = objectSurvService.upRating(id, objectSurv);
-        /*if (updated.isPresent()) {
-            ra.addFlashAttribute("successMessage",
-                    "Рейтинг успешно  увеличен");
-        } else {
-            ra.addFlashAttribute("errorMessage",
-                    "Рейтинг не был обновлен");
-        }*/
-        return "redirect:/survey/take-survey/" + objectSurv.getSurvey().getId();
+    public String updateExisting(@PathVariable Integer id, ObjectSurv objectSurv, Model model/*, RedirectAttributes ra*/) {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String login = userDetails.getUsername();
+        Optional<User> user = userService.findByLogin(login);
+        Client client = user.get().getClient();
+
+        Optional<ObjectSurv> updated = objectSurvService.upRating(id, objectSurv, client);
+
+        return "redirect:/survey/" + objectSurv.getSurvey().getId();
     }
 }

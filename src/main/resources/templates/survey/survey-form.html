@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Survey-form</title>
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class="mb-3 row d d-none">
+    <div class="mb-3 row">
       <label class="col-sm-2 col-form-label" for="company">Компания-инициатор: </label>
       <div class="col-sm-10">
         <select class="form-select" id="company" th:field="*{company}">
@@ -54,8 +54,12 @@
         <button class="btn btn-success form-control">Создать</button>
       </div>
       <div class="col-sm-5">
-        <a th:each="company : ${companies}" th:value="${company.id}" th:href="@{'/company/' + ${company.id}}" class="btn btn-danger form-control">Отменить</a>
+        <a th:if="${initiator == true}" th:each="company : ${companies}" th:value="${company.id}" th:href="@{'/company/' + ${company.id}}" class="btn btn-danger form-control">К компании инициатору</a>
+        <a th:if="${initiator == false}" th:href="@{/survey}" class="btn btn-danger form-control">Отмена</a>
       </div>
+    </div>
+    <div>
+      <a th:href="@{/survey}" class="btn btn-dark text-success">К списку опросов</a>
     </div>
   </form>
 </div>

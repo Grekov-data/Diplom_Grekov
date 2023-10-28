@@ -3,7 +3,10 @@ package org.datko.diplom_grekov.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,38 +19,18 @@ public class Client {
     @Column(name = "name", nullable = false)
     private String name;                            //ФИО
 
-    @Column(name = "age", nullable = false)
-    private Integer age;                            //возраст
-
     @Column(name = "gender", nullable = false)
     private String gender;                          //пол (муж./жен.)
-
-    @Column(name = "email", nullable = false)
-    private String email;                           //эл.почта
-
-    /*@Column(name = "completedSurv_f", nullable = false)
-    private ArrayList<CompletedSurv> completedSurv = new ArrayList<CompletedSurv>();*/
 
     @Column(name = "registrated_date", nullable = false)
     private Date registrationDate;
 
-    /*private String getFormattedGender() {
-        String genderString;
-        if (gender == true) {
-            genderString = "мужской";
-        }
-        else {
-            genderString = "женский";
-        }
-        return genderString;
-    }*/
+    public String getFormattedRegistrationDate() {
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        return formatter.format(registrationDate);
+    }
 
-    //Добавить после Spring Security
-    /*@Column(name = "password_f", nullable = false)
-    private String password;                        //пароль*/
+    @ManyToMany
+    private Set<Survey> completedSurveys;
 
-    ////изучить - не так написано
-    /*@ManyToMany(mappedBy = "client")
-    @JsonIgnore
-    private Set<Survey> survey;*/                   //список опросов, которые прошёл пользователь
 }

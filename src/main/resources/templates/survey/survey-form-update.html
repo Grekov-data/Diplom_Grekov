@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Survey-form-update</title>
@@ -19,7 +19,14 @@
     <div class="mb-3 row">
       <label class="col-sm-2 col-form-label" for="field">Сфера деятельности: </label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" id="field" th:field="*{field}" required minlength="1">
+        <select class="form-select" id="field" th:field="*{field}">
+          <option th:value="Наука">Наука</option>
+          <option th:value="Искусство">Искусство</option>
+          <option th:value="Культура">Культура</option>
+          <option th:value="Здоровье">Здоровье</option>
+          <option th:value="Экономика">Экономика</option>
+          <option th:value="Прочее">Прочее</option>
+        </select>
       </div>
     </div>
 

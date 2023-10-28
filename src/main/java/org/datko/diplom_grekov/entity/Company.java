@@ -25,13 +25,4 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private Set<Survey> surveys;
 
-    /*@Column(name = "password_f", nullable = false)
-    private String password;*/                                        //пароль от профиля компании
-
-    /*@Column(name = "date_of_registration_f", nullable = false)
-    private Date dateOfRegistration;*/                                //дата регистрации компании НА САЙТЕ - ???
-
-    /*@OneToMany(mappedBy = "company")
-    @JsonIgnore
-    private Set<Survey> survey;*/                                     //список опросов, которые создала данная компания
 }

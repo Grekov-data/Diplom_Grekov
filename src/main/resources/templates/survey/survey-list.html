@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Survey-list</title>
@@ -12,33 +12,42 @@
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
-      <th>id</th>
-      <th>Прохождение:</th>
+      <th sec:authorize="hasRole('ADMIN')" class="text-success">ID</th>
+      <th sec:authorize="isAuthenticated()">Прохождение:</th>
       <th>Сфера:</th>
       <th>Опросы:</th>
       <th>Описание:</th>
+      <th sec:authorize="hasRole('ADMIN')" class="text-success">Действия:</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="survey: ${surveys}">
-      <td class="col-1">[[${survey.id}]]</td>
-      <td class="col-1">
-        <a th:if="${survey.isActive == true}" th:href="@{'/survey/take-survey/' + ${survey.id}}" class="btn btn-success">Пройти</a>
-        <a th:if="${survey.isActive == false}" class="btn btn-danger" disabled>Недоступно</a>
+      <td sec:authorize="hasRole('ADMIN')" class="col-1 text-success">[[${survey.id}]]</td>
+      <td class="col-1" sec:authorize="isAuthenticated()">
+        <a th:each="completedSurv: ${user.client.completedSurveys}" th:class="${completedSurv.equals(survey)} == true ? 'btn btn-warning' : 'd-none'">пройден</a>
       </td>
       <td>[[${survey.field}]]</td>
       <td class="col-4">
+        <h1 class="text-warning">
         <a th:href="@{'/survey/' + ${survey.id}}">[[${survey.name}]]</a>
+        </h1>
          от компании
         <a th:href="@{'/company/' + ${survey.company.id}}">[[${survey.company.name}]]</a>
       </td>
       <td class="col-6">[[${survey.description}]]</td>
+      <td sec:authorize="hasRole('ADMIN')" class="text-success">
+        <a th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-primary">Редактировать</a>
+        <a th:href="@{'/survey/delete/' + ${survey.id}}" class="btn btn-danger">Удалить</a>
+      </td>
     </tr>
     <tr th:if="${surveys == null}">
-      <td colspan="3">Нет записей</td>
+      <td colspan="6">Нет записей</td>
     </tr>
     </tbody>
   </table>
+  <div>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/survey/new}" class="btn form-control btn-dark text-success">Создать опрос</a>
+  </div>
 </div>
 
 <th:block th:replace="page/fragments.html :: page-footer"/>

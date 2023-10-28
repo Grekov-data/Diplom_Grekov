@@ -1,6 +1,5 @@
 package org.datko.diplom_grekov.rdb.repository;
 
-
 import org.datko.diplom_grekov.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

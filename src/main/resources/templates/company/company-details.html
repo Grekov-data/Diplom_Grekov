@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Company-details</title>
@@ -14,14 +14,15 @@
 
     <div class="card-header bg-dark text-light">
       Организация
-      <a th:href="@{'/company/update/' + ${company.id}}" class="btn btn-warning btn-sm">ред.</a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{'/company/update/' + ${company.id}}" class="btn btn-warning btn-sm text-success">ред.</a>
     </div>
 
     <div th:if="${company != null}" class="card-body d-flex justify-content-between">
 
       <div class="col-4">
-        <div>
-          <h5 class="card-title">[[${company.name}]] (id [[${company.id}]])</h5>
+        <div class="card-title">
+          <h5>[[${company.name}]]</h5>
+          <h5 sec:authorize="hasRole('ADMIN')" class="bg-dark text-success rounded-3">(id [[${company.id}]])</h5>
         </div>
 
         <p>Эл.почта: [[${company.email}]],</p>
@@ -35,29 +36,32 @@
         <table class="table table-bordered">
           <thead class="table-dark">
           <tr>
-            <th>ID</th>
+            <th sec:authorize="hasRole('ADMIN')" class="text-success">ID</th>
             <th>Название опроса:</th>
             <th>Статус:</th>
             <th>Описание:</th>
-            <th>Действие:</th>
+            <th sec:authorize="hasRole('ADMIN')" class="text-success">Действие:</th>
           </tr>
           </thead>
           <tbody>
           <tr th:each="survey: ${company.surveys}">
-            <td>[[${survey.id}]]</td>
+            <td sec:authorize="hasRole('ADMIN')">[[${survey.id}]]</td>
             <td>
               <a th:href="@{'/survey/' + ${survey.id}}">[[${survey.name}]]</a>
             </td>
-            <td th:href="@{'/survey/' + ${survey.id}}">[[${survey.isActive}]]</td>
-            <td th:href="@{'/survey/' + ${survey.id}}">[[${survey.description}]]</td>
             <td>
+              <button class="btn btn-success form-control btn-sm col-2" th:if="${survey.isActive == true}">Активен</button>
+              <button class="btn btn-danger form-control btn-sm col-2" th:if="${survey.isActive == false}">Не активен</button>
+            </td>
+            <td th:href="@{'/survey/' + ${survey.id}}">[[${survey.description}]]</td>
+            <td sec:authorize="hasRole('ADMIN')">
               <a th:href="@{'/survey/update/' + ${survey.id}}" class="btn btn-primary"> ред. </a>
               <a th:href="@{'/survey/delete/' + ${survey.id}}" class="btn btn-danger"> X </a>
             </td>
           </tr>
           <tr>
             <td colspan="5" class="text-center">
-              <a th:href="@{'/survey/new/' + ${company.id}}" class="btn btn-success">Добавить новый опрос</a>
+              <a sec:authorize="hasRole('ADMIN')" th:href="@{'/survey/new/' + ${company.id}}" class="btn btn-success">Добавить новый опрос</a>
             </td>
           </tr>
           </tbody>

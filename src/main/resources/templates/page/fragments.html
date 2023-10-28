@@ -14,23 +14,29 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a th:href="@{/}" class="btn btn-warning">Главная</a></li>
-          <li><a th:href="@{/client}" class="nav-link px-2 text-white">Пользователи</a></li>
+          <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/client}" class="nav-link px-2 text-success">Пользователи</a></li>
           <li><a th:href="@{/survey}" class="nav-link px-2 text-white">Перечень опросов</a></li>
-          <li><a th:href="@{/objectSurv}" class="nav-link px-2 text-white">Перечень объектов</a></li>
+          <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/objectSurv}" class="nav-link px-2 text-success">Перечень объектов</a></li>
+          <li class="nav-item"><a th:href="@{/company}" class="nav-link px-2 text-white">Перечень компаний</a></li>
         </ul>
 
         <!--<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 text-end" role="search">
           <input type="search" class="form-control form-control-dark" placeholder="Поиск..." aria-label="Поиск">
         </form>-->
-        <span class="col-sm-1"  sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+        <a class="col-sm-2 text-warning" th:href="@{/user-details}" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}"></a>
 
         <div class="text-end d-flex">
+          <div>&nbsp;</div>
           <form sec:authorize="isAuthenticated()" class="d-flex" role="search" method="post" th:action="@{/logout}">
             <button class="btn btn-warning">Выйти</button>
           </form>
           <a sec:authorize="!isAuthenticated()" th:href="@{/login}" type="button" class="btn btn-warning">Авторизация</a>
         </div>
       </div>
+      <div sec:authorize="hasRole('ADMIN')" class="container-fluid text-center">
+        <h6 class="text-danger">ВНИМАНИЕ!</h6>
+        <h6 class="text-success">Вы находитесь в режиме АДМИНистратора</h6>
+        </div>
     </div>
 
   </div>
@@ -48,7 +54,6 @@
   </div>
   <ul class="nav justify-content-center border-bottom pb-3 mb-3">
     <li class="nav-item"><a href="#" class="nav-link px-2 text-white">О нас</a></li>
-    <li class="nav-item"><a th:href="@{/company}" class="nav-link px-2 text-white">Для организаций</a></li>
     <li class="nav-item"><a href="#" class="nav-link px-2 text-white">FAQ</a></li>
   </ul>
   <p class="text-center text-white">© 2023 Опрос.ру</p>

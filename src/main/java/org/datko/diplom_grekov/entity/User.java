@@ -3,8 +3,6 @@ package org.datko.diplom_grekov.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
 @Entity
 @Table(name="user")
@@ -21,4 +19,8 @@ public class User {
 
     @Column(name="role", nullable = false)
     private String role;
+
+    @OneToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 }

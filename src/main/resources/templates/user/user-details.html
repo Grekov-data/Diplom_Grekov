@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>User-details</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<th:block th:replace="page/fragments.html :: page-header"/>
+<div>
+  <div class="card">
+    <div class="card-header bg-dark text-light">
+      Профиль пользователя&nbsp;
+      <a th:href="@{'/client/update/' + ${user.client.id}}" class="btn btn-warning btn-sm">ред.</a>
+    </div>
+
+    <div th:if="${user != null}" class="card-body">
+      <div class="card-title d-flex">
+        <h5>[[${user.client.name}]]&nbsp;</h5>
+        <h5 sec:authorize="hasRole('ADMIN')" class="bg-dark text-success rounded-3">user.id - [[${user.id}]]; client.id - [[${user.client.id}]]</h5>
+      </div>
+      </в>
+      <p class="card-text">
+      <p>Пол - [[${user.client.gender}]]</p>
+      <p class="text-secondary">Зарегистрирован: [[${user.client.getFormattedRegistrationDate()}]]</p>
+      </p>
+      <a th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger">Удалить профиль</a>
+    </div>
+
+    <div>
+      <table class="table table-bordered">
+        <thead class="table-dark">
+        <tr>
+          <th class="text-success">ID</th>
+          <th>Пройденные опросы:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="completedSurv: ${user.client.completedSurveys}">
+          <td>[[${completedSurv.id}]]</td>
+          <td>[[${completedSurv.name}]]</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:if="${user == null}" class="card-body">
+      <h5 class="card-title bg-danger text-light">Пользователь не найден</h5>
+      <p class="card-text">Указан неверный id пользователя</p>
+      <a th:href="@{/}" class="btn btn-primary">На главную</a>
+    </div>
+  </div>
+</div>
+<th:block th:replace="page/fragments.html :: page-footer"/>
+</body>
+</html>

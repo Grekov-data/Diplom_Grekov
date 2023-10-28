@@ -1,5 +1,6 @@
 package org.datko.diplom_grekov.service;
 
+import org.datko.diplom_grekov.entity.Client;
 import org.datko.diplom_grekov.entity.ObjectSurv;
 import org.springframework.stereotype.Service;
 
@@ -12,5 +13,5 @@ public interface ObjectSurvService {
     Optional<ObjectSurv> findBySurveyId(Integer surveyId);
     Optional<ObjectSurv> add(Integer surveyId, ObjectSurv objectSurv);
     Optional<ObjectSurv> deleteById(Integer id);
-    Optional<ObjectSurv> upRating(Integer id, ObjectSurv objectSurv);
+    Optional<ObjectSurv> upRating(Integer id, ObjectSurv objectSurv, Client client);
 }

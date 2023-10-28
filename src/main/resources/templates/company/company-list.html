@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Company-list</title>
@@ -12,15 +12,16 @@
   <table class="table table-bordered">
     <thead class="table-dark">
     <tr>
-      <th>ID</th>
+      <th sec:authorize="hasRole('ADMIN')" class="text-success">ID</th>
       <th>Название:</th>
       <th>Email:</th>
       <th>Сайт:</th>
+      <th sec:authorize="hasRole('ADMIN')" class="text-success">Действия:</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="company: ${companies}">
-      <td>[[${company.id}]]</td>
+      <td sec:authorize="hasRole('ADMIN')">[[${company.id}]]</td>
       <td>
         <a th:href="@{'/company/' + ${company.id}}">[[${company.name}]]</a>
       </td>
@@ -28,14 +29,18 @@
       <td>
         <a th:href="@{'http://' + ${company.website}}">[[${company.website}]]</a>
       </td>
+      <td sec:authorize="hasRole('ADMIN')" class="text-success">
+        <a th:href="@{'/company/update/' + ${company.id}}" class="btn btn-primary">Редактировать</a>
+        <a th:href="@{'/company/delete/' + ${company.id}}" class="btn btn-danger">Удалить</a>
+      </td>
     </tr>
     <tr th:if="${companies == null}">
-      <td colspan="4">Нет записей</td>
+      <td colspan="5">Нет записей</td>
     </tr>
     </tbody>
   </table>
   <div>
-      <a th:href="@{/company/new}" class="btn btn-success form-control">Зарегистрировать компанию</a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/company/new}" class="btn form-control btn-dark text-success">Зарегистрировать компанию</a>
   </div>
 </div>
 

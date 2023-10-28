@@ -34,12 +34,16 @@ public class WebSecurityConfig {
                                 "/company/new",
                                 "/company/delete/*",
                                 "/company/update/*",
+                                "/survey/new",
                                 "/survey/new/*",
                                 "/survey/delete/*",
-                                "/survey/update/*"
+                                "/survey/update/*",
+                                "/client",
+                                "/client/*",
+                                "/client/new/*",
+                                "/client/delete/*"
                         ).hasRole("ADMIN")
-                        .anyRequest().permitAll()
-                        /*.anyRequest().authenticated()*/)
+                        .anyRequest().authenticated())
 
                 .formLogin((form) -> form
                         .loginPage("/login").permitAll())
