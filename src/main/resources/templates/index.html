@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Home-index</title>
@@ -11,8 +11,10 @@
 <div class="container-fluid text-center">
 
     <div>
-    <h3>Добро пожаловать!</h3>
-    <h1>Главная страница</h1>
+        <h3>Добро пожаловать!</h3>
+        <h2>Здесь вы сможете выразить своё мнение по актуальным и "острым" вопросам.</h2>
+        <h4 sec:authorize="!isAuthenticated()" class="text-warning">Для прохождения авторизируйтесь (либо зарегистрируйтесь для авторизации) - кнопка в верхнем правом углу.</h4>
+        <h4 sec:authorize="isAuthenticated()" class="text-warning">Вы авторизированы. Для начала прохождения воспользуйтесь навигационной панелью в левом верхнем углу.</h4>
     </div>
 </div>
 

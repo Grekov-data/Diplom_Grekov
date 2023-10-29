@@ -77,6 +77,6 @@ public class ObjectSurvController {
 
         Optional<ObjectSurv> updated = objectSurvService.upRating(id, objectSurv, client);
 
-        return "redirect:/survey/" + objectSurv.getSurvey().getId();
+        return "redirect:/survey";
     }
 }

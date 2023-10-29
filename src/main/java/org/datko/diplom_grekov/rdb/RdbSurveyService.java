@@ -60,7 +60,6 @@ public class RdbSurveyService implements SurveyService {
                 (duplicatedByNameSurvey.isEmpty() ||
                         Objects.equals(duplicatedByNameSurvey.get().getId(), id))) {
             survey.setId(id);
-            survey.setField(updated.get().getField());
             survey.setCompany(updated.get().getCompany());
             survey.setIsActive(updated.get().getIsActive());
             return Optional.of(surveyRepository.save(survey));

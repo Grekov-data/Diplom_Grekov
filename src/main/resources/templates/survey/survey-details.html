@@ -34,9 +34,9 @@
           <button class="btn btn-danger form-control btn-sm col-2" th:if="${survey.isActive == false}">Не активен</button>
         </form>
         <div sec:authorize="hasRole('USER')">
-        <button class="btn btn-success form-control btn-sm col-2" th:if="${survey.isActive == true}">Активен</button>
-        <button class="btn btn-danger form-control btn-sm col-2" th:if="${survey.isActive == false}">Не активен</button>
-      </div>
+          <button class="btn btn-success form-control btn-sm col-2" th:if="${survey.isActive == true}">Активен</button>
+          <button class="btn btn-danger form-control btn-sm col-2" th:if="${survey.isActive == false}">Не активен</button>
+        </div>
         <p class="card-text mb-2">Сфера - [[${survey.field}]]</p>
         <p>Описание:</p>
         <p>[[${survey.description}]]</p>
@@ -44,9 +44,8 @@
           <a th:href="@{'/company/' + ${survey.company.id}}">[[${survey.company.name}]]</a>
         </p>
         <a th:href="@{/survey}" class="btn btn-primary">К опросам</a>
-        <a th:if="${survey.isActive == true}" th:href="@{'/survey/take-survey/' + ${survey.id}}" class="btn btn-success" disabled>Пройти опрос</a>
-        <a th:if="${survey.isActive == false}" class="btn btn-danger" disabled>Прохождение недоступно</a>
-        <a th:each="completedSurv: ${user.client.completedSurveys}" th:class="${completedSurv.equals(survey)} == true ? 'btn btn-warning' : 'd-none'">Опрос пройден</a>
+        <a sec:authorize="hasRole('USER')" th:if="${survey.isActive == true}" th:href="@{'/survey/take-survey/' + ${survey.id}}" class="btn btn-success" disabled>Пройти опрос</a>
+        <a sec:authorize="hasRole('USER')" th:if="${survey.isActive == false}" class="btn btn-danger" disabled>Прохождение недоступно</a>
       </div>
 
     </div>
@@ -65,7 +64,7 @@
         <tr th:each="objectSurv: ${survey.objectSurvs}">
           <td sec:authorize="hasRole('ADMIN')">[[${objectSurv.id}]]</td>
           <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">
-            <h1 class="text-success">[[${objectSurv.name}]]</h1>
+            <h3 class="text-success">[[${objectSurv.name}]]</h3>
           </td>
           <td th:href="@{'/objectSurv/' + ${objectSurv.id}}">
             <h4 class="text-warning">[[${objectSurv.rating}]]</h4>
