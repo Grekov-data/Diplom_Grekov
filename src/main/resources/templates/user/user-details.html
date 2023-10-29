@@ -14,34 +14,43 @@
       <a th:href="@{'/client/update/' + ${user.client.id}}" class="btn btn-warning btn-sm">ред.</a>
     </div>
 
-    <div th:if="${user != null}" class="card-body">
-      <div class="card-title d-flex">
-        <h5>[[${user.client.name}]]&nbsp;</h5>
-        <h5 sec:authorize="hasRole('ADMIN')" class="bg-dark text-success rounded-3">user.id - [[${user.id}]]; client.id - [[${user.client.id}]]</h5>
+    <div th:if="${user != null}" class="card-body d-flex justify-content-between">
+      <div class="col-4">
+        <div class="card-title d-flex">
+          <h5>[[${user.client.name}]]&nbsp;</h5>
+          <h5 sec:authorize="hasRole('ADMIN')" class="bg-dark text-success rounded-3">user.id - [[${user.id}]]; client.id - [[${user.client.id}]]</h5>
+        </div>
+        </в>
+        <p class="card-text">
+        <p>Пол - [[${user.client.gender}]]</p>
+        <p class="text-secondary">Зарегистрирован: [[${user.client.getFormattedRegistrationDate()}]]</p>
+        </p>
+        <a  sec:authorize="hasRole('ADMIN')" th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger text-dark">Удалить профиль</a>
       </div>
-      </в>
-      <p class="card-text">
-      <p>Пол - [[${user.client.gender}]]</p>
-      <p class="text-secondary">Зарегистрирован: [[${user.client.getFormattedRegistrationDate()}]]</p>
-      </p>
-      <a th:href="@{'/user/delete/' + ${user.id}}" class="btn btn-danger">Удалить профиль</a>
-    </div>
 
-    <div>
-      <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-          <th class="text-success">ID</th>
-          <th>Пройденные опросы:</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="completedSurv: ${user.client.completedSurveys}">
-          <td>[[${completedSurv.id}]]</td>
-          <td>[[${completedSurv.name}]]</td>
-        </tr>
-        </tbody>
-      </table>
+
+      <div class="text-center col-8">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+          <tr>
+            <th sec:authorize="hasRole('ADMIN')" class="text-success">ID</th>
+            <th>Пройденные опросы:</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="completedSurv: ${user.client.completedSurveys}">
+            <td sec:authorize="hasRole('ADMIN')">[[${completedSurv.id}]]</td>
+            <td>
+              <h1 class="text-warning">
+                <a th:href="@{'/survey/' + ${completedSurv.id}}">[[${completedSurv.name}]]</a>
+              </h1>
+              от компании
+              <a th:href="@{'/company/' + ${completedSurv.company.id}}">[[${completedSurv.company.name}]]</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div th:if="${user == null}" class="card-body">
